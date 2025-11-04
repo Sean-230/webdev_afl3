@@ -1,21 +1,24 @@
 <?php
-
+// database/factories/ProductFactory.php
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class ProductFactory extends Factory
 {
-    public function definition(): array
+    protected $model = \App\Models\Product::class;
+
+    public function definition()
     {
-        // Categories for the ice cream store
-        $categories = ['Es Krim', 'Bubuk Es Krim', 'Cone', 'Cup', 'Sendok', 'Tutup'];
+        // sample categories
+        $categories = ['Es Krim','Bubuk Es Krim','Cone','Cup','Sendok','Tutup'];
 
         return [
-            'image_path' => 'images/' . $this->faker->word() . '.jpg',
-            'name' => $this->faker->words(2, true), 
-            'price' => $this->faker->randomFloat(2, 5000, 100000), 
+            'name' => $this->faker->unique()->words(3, true),
             'category' => $this->faker->randomElement($categories),
+            'price' => $this->faker->numberBetween(1000, 200000),
+            'image_path' => 'images/placeholder.jpg', // replace with your images
         ];
     }
 }
