@@ -18,7 +18,7 @@ class ProductFactory extends Factory
             'name' => $this->faker->unique()->words(3, true),
             'category' => $this->faker->randomElement($categories),
             'price' => $this->faker->numberBetween(1000, 200000),
-            'image_path' => 'images/placeholder.jpg', // replace with your images
+            'image_path' => 'images/placeholder.jpg', 
         ];
     }
 }
