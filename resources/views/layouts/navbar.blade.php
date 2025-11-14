@@ -20,7 +20,7 @@
                     <a class="nav-link fw-medium text-dark px-2 {{ Request::is('products*') ? 'active' : '' }}" href="/products">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fw-medium text-dark px-2 {{ Request::is('about*') ? 'active' : '' }}" href="/about">About</a>
+                    <a class="nav-link fw-medium text-dark px-2 {{ Request::is('review') ? 'active' : '' }}" href="/review">Review</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fw-medium text-dark px-2 {{ Request::is('contact') ? 'active' : '' }}" href="/contact">Contact</a>

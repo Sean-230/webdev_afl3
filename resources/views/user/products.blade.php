@@ -19,14 +19,23 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        :root {
+            --primary-dark: #1A3153;
+            --primary-teal: #0C5777;
+            --accent-pink: #EF93FF;
+            --accent-peach: #F6D4E4;
+        }
+
         body {
-            background-color: #f8f9fa;
+            background-color: #ffffff;
         }
 
         .product-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             height: 100%;
             border: none;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
         .product-card:hover {
@@ -38,7 +47,7 @@
             position: relative;
             overflow: hidden;
             height: 250px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-color: var(--accent-peach);
         }
 
         .product-image {
@@ -64,12 +73,40 @@
             top: 15px;
             left: 15px;
             z-index: 10;
+            background-color: var(--primary-dark);
+            color: white;
         }
 
         .price-tag {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #dc3545;
+            color: var(--primary-teal);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-pink);
+            border: none;
+            color: var(--primary-dark);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-primary {
+            border-color: var(--primary-teal);
+            color: var(--primary-teal);
+            font-weight: 600;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-teal);
+            border-color: var(--primary-teal);
+            color: white;
         }
 
         .filter-card {
@@ -85,17 +122,43 @@
 
         .category-item:hover,
         .category-item.active {
-            background-color: #f8f9fa;
-            border-left-color: #dc3545;
+            background-color: var(--accent-peach);
+            border-left-color: var(--accent-pink);
             padding-left: 15px;
         }
 
         .search-box {
             border-radius: 50px;
+            border-color: var(--primary-teal);
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 0.2rem rgba(239, 147, 255, 0.25);
         }
 
         .sort-select {
             border-radius: 10px;
+            border-color: var(--primary-teal);
+        }
+
+        .sort-select:focus {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 0.2rem rgba(239, 147, 255, 0.25);
+        }
+
+        .badge.bg-success {
+            background-color: var(--primary-teal) !important;
+        }
+
+        .badge.bg-secondary {
+            background-color: var(--accent-peach) !important;
+            color: var(--primary-dark);
+        }
+
+        .badge.bg-primary {
+            background-color: var(--accent-pink) !important;
+            color: var(--primary-dark);
         }
     </style>
 </head>
@@ -105,20 +168,20 @@
     @include('layouts.navbar')
 
     <!-- Hero Section -->
-    <section class="bg-primary text-white py-5" style="margin-top: 76px;">
+    <section class="text-white py-5" style="margin-top: 76px; background-color: var(--primary-dark);">
         <div class="container py-4">
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb text-white mb-3">
-                            <li class="breadcrumb-item"><a href="/" class="text-white text-decoration-none">Home</a>
+                        <ol class="breadcrumb mb-3">
+                            <li class="breadcrumb-item"><a href="/" class="text-white text-decoration-none opacity-75">Home</a>
                             </li>
                             <li class="breadcrumb-item active text-white" aria-current="page">Products</li>
                         </ol>
                     </nav>
                     <h1 class="display-4 fw-bold mb-3">Our Product Collection</h1>
-                    <p class="lead mb-0">Discover our wide range of premium ice cream products and supplies for your
-                        business</p>
+                    <p class="lead mb-0 opacity-90">Discover our wide range of premium ice cream products and supplies for your business
+                    </p>
                 </div>
                 <div class="col-lg-4 text-end d-none d-lg-block">
                     <i class="bi bi-box-seam display-1 opacity-25"></i>
@@ -137,8 +200,8 @@
                         <div class="card-body p-4">
                             <!-- Search -->
                             <div class="mb-4">
-                                <h5 class="fw-bold mb-3">
-                                    <i class="bi bi-search me-2 text-primary"></i>Search Products
+                                <h5 class="fw-bold mb-3" style="color: var(--primary-dark);">
+                                    <i class="bi bi-search me-2" style="color: var(--accent-pink);"></i>Search Products
                                 </h5>
                                 <form action="{{ route('products') }}" method="GET">
                                     <div class="input-group">
@@ -151,12 +214,12 @@
                                 </form>
                             </div>
 
-                            <hr>
+                            <hr style="border-color: var(--accent-peach);">
 
                             <!-- Categories -->
                             <div class="mb-4">
-                                <h5 class="fw-bold mb-3">
-                                    <i class="bi bi-tag me-2 text-primary"></i>Categories
+                                <h5 class="fw-bold mb-3" style="color: var(--primary-dark);">
+                                    <i class="bi bi-tag me-2" style="color: var(--accent-pink);"></i>Categories
                                 </h5>
                                 <form id="categoryForm" action="{{ route('products') }}" method="GET">
                                     <input type="hidden" name="search" value="{{ request('search') }}">
@@ -167,49 +230,54 @@
                                         <a href="{{ route('products') }}"
                                             class="list-group-item list-group-item-action border-0 category-item {{ request('category') == '' ? 'active' : '' }}">
                                             <i class="bi bi-grid me-2"></i>All Products
-                                            <span
-                                                class="badge bg-primary rounded-pill float-end">{{ \App\Models\Product::count() }}</span>
+                                            <span class="badge float-end"
+                                                style="background-color: var(--accent-pink); color: var(--primary-dark);">
+                                                {{ \App\Models\Product::count() }}
+                                            </span>
                                         </a>
 
                                         @foreach ($categories as $cat)
                                             <a href="?category={{ $cat }}&search={{ request('search') }}&sort={{ request('sort') }}&order={{ request('order') }}"
                                                 class="list-group-item list-group-item-action border-0 category-item {{ request('category') == $cat ? 'active' : '' }}">
                                                 <i class="bi bi-folder me-2"></i>{{ $cat }}
-                                                <span
-                                                    class="badge bg-secondary rounded-pill float-end">{{ \App\Models\Product::where('category', $cat)->count() }}</span>
+                                                <span class="badge bg-secondary float-end">
+                                                    {{ \App\Models\Product::where('category', $cat)->count() }}
+                                                </span>
                                             </a>
                                         @endforeach
                                     </div>
                                 </form>
                             </div>
 
-                            <hr>
+                            <hr style="border-color: var(--accent-peach);">
 
                             <!-- Price Info -->
                             <div class="mb-3">
-                                <h5 class="fw-bold mb-3">
-                                    <i class="bi bi-cash-stack me-2 text-primary"></i>Price Range
+                                <h5 class="fw-bold mb-3" style="color: var(--primary-dark);">
+                                    <i class="bi bi-cash-stack me-2" style="color: var(--accent-pink);"></i>Price Range
                                 </h5>
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <span class="text-muted">Minimum:</span>
-                                    <span class="fw-bold">Rp
+                                    <span class="fw-bold" style="color: var(--primary-teal);">Rp
                                         {{ number_format(\App\Models\Product::min('price'), 0, ',', '.') }}</span>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="text-muted">Maximum:</span>
-                                    <span class="fw-bold">Rp
+                                    <span class="fw-bold" style="color: var(--primary-teal);">Rp
                                         {{ number_format(\App\Models\Product::max('price'), 0, ',', '.') }}</span>
                                 </div>
                             </div>
 
-                            <hr>
+                            <hr style="border-color: var(--accent-peach);">
 
                             <!-- Contact Card -->
-                            <div class="bg-light rounded p-3 text-center">
-                                <i class="bi bi-headset display-4 text-primary mb-2"></i>
-                                <h6 class="fw-bold mb-2">Need Help?</h6>
+                            <div class="rounded p-3 text-center"
+                                style="background-color: var(--accent-peach);">
+                                <i class="bi bi-headset display-4 mb-2" style="color: var(--primary-dark);"></i>
+                                <h6 class="fw-bold mb-2" style="color: var(--primary-dark);">Need Help?</h6>
                                 <p class="small text-muted mb-3">Contact our sales team for bulk orders</p>
-                                <a href="/contact" class="btn btn-primary btn-sm w-100">
+                                <a href="/contact" class="btn btn-sm w-100"
+                                    style="background-color: var(--accent-pink); color: var(--primary-dark); border: none; font-weight: 600;">
                                     <i class="bi bi-telephone me-2"></i>Contact Us
                                 </a>
                             </div>
@@ -224,11 +292,14 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-md-6 mb-3 mb-md-0">
-                                    <h5 class="mb-0 fw-bold">
-                                        <i class="bi bi-box-seam me-2 text-primary"></i>
+                                    <h5 class="mb-0 fw-bold" style="color: var(--primary-dark);">
+                                        <i class="bi bi-box-seam me-2" style="color: var(--accent-pink);"></i>
                                         {{ $products->total() }} Products Found
                                         @if (request('category'))
-                                            <span class="badge bg-primary">{{ request('category') }}</span>
+                                            <span class="badge"
+                                                style="background-color: var(--accent-pink); color: var(--primary-dark);">
+                                                {{ request('category') }}
+                                            </span>
                                         @endif
                                     </h5>
                                 </div>
@@ -278,7 +349,7 @@
                                     <div class="card product-card shadow-sm h-100">
                                         <div class="product-image-wrapper">
                                             <!-- Category Badge -->
-                                            <span class="badge bg-dark category-badge">{{ $product->category }}</span>
+                                            <span class="badge category-badge">{{ $product->category }}</span>
 
                                             <!-- Product Image -->
                                             @if ($product->image_path)
@@ -286,7 +357,8 @@
                                                     class="product-image">
                                             @else
                                                 <div class="d-flex align-items-center justify-content-center h-100">
-                                                    <i class="bi bi-image display-1 text-white opacity-50"></i>
+                                                    <i class="bi bi-image display-1 opacity-50"
+                                                        style="color: var(--primary-dark);"></i>
                                                 </div>
                                             @endif
 
@@ -301,7 +373,7 @@
                                         </div>
 
                                         <div class="card-body">
-                                            <h5 class="card-title fw-bold mb-2">{{ $product->name }}</h5>
+                                            <h5 class="card-title fw-bold mb-2" style="color: var(--primary-dark);">{{ $product->name }}</h5>
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <span class="price-tag">Rp
                                                     {{ number_format($product->price, 0, ',', '.') }}</span>
@@ -333,7 +405,7 @@
                         <div class="card border-0 shadow-sm">
                             <div class="card-body text-center py-5">
                                 <i class="bi bi-inbox display-1 text-muted mb-3"></i>
-                                <h4 class="fw-bold mb-3">No Products Found</h4>
+                                <h4 class="fw-bold mb-3" style="color: var(--primary-dark);">No Products Found</h4>
                                 <p class="text-muted mb-4">We couldn't find any products matching your search criteria.
                                 </p>
                                 <a href="{{ route('products') }}" class="btn btn-primary">
@@ -348,15 +420,17 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-5 bg-dark text-white">
+    <section class="py-5 text-white" style="background-color: var(--primary-teal);">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h2 class="fw-bold mb-3">Looking for Bulk Orders?</h2>
-                    <p class="lead mb-0">Contact our sales team for special pricing on large quantity orders</p>
+                    <p class="lead mb-0 opacity-90">Contact our sales team for special pricing on large quantity orders
+                    </p>
                 </div>
                 <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
-                    <a href="/contact" class="btn btn-light btn-lg">
+                    <a href="/contact" class="btn btn-light btn-lg"
+                        style="color: var(--primary-dark); font-weight: 600;">
                         <i class="bi bi-telephone me-2"></i>Contact Sales
                     </a>
                 </div>
@@ -365,30 +439,30 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-5">
+    <footer class="py-5 text-white" style="background-color: var(--primary-dark);">
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-4 mb-4">
                     <h5 class="fw-bold mb-3">
-                        <i class="bi bi-snow me-2"></i>IceCream Distribution
+                        <i class="bi bi-snow me-2" style="color: var(--accent-pink);"></i>IceCream Distribution
                     </h5>
-                    <p class="text-white-50">Your trusted partner for premium ice cream distribution services across
-                        Indonesia.</p>
+                    <p class="opacity-75">Your trusted partner for premium ice cream distribution services across Indonesia.
+                    </p>
                     <div class="d-flex gap-2 mt-3">
-                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle"
-                            style="width: 40px; height: 40px;">
+                        <a href="#" class="btn btn-sm rounded-circle border border-white"
+                            style="width: 40px; height: 40px; color: white;">
                             <i class="bi bi-facebook"></i>
                         </a>
-                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle"
-                            style="width: 40px; height: 40px;">
+                        <a href="#" class="btn btn-sm rounded-circle border border-white"
+                            style="width: 40px; height: 40px; color: white;">
                             <i class="bi bi-instagram"></i>
                         </a>
-                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle"
-                            style="width: 40px; height: 40px;">
+                        <a href="#" class="btn btn-sm rounded-circle border border-white"
+                            style="width: 40px; height: 40px; color: white;">
                             <i class="bi bi-twitter"></i>
                         </a>
-                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle"
-                            style="width: 40px; height: 40px;">
+                        <a href="#" class="btn btn-sm rounded-circle border border-white"
+                            style="width: 40px; height: 40px; color: white;">
                             <i class="bi bi-whatsapp"></i>
                         </a>
                     </div>
@@ -397,53 +471,71 @@
                 <div class="col-lg-2 col-md-6 mb-4">
                     <h5 class="fw-bold mb-3">Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
-                        <li class="mb-2"><a href="/products"
-                                class="text-white-50 text-decoration-none">Products</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">About Us</a></li>
-                        <li class="mb-2"><a href="/contact" class="text-white-50 text-decoration-none">Contact</a>
-                        </li>
+                        <li class="mb-2"><a href="/" class="text-decoration-none opacity-75"
+                                style="color: white;">Home</a></li>
+                        <li class="mb-2"><a href="/products" class="text-decoration-none opacity-75"
+                                style="color: white;">Products</a></li>
+                        <li class="mb-2"><a href="/about" class="text-decoration-none opacity-75"
+                                style="color: white;">About Us</a></li>
+                        <li class="mb-2"><a href="/contact" class="text-decoration-none opacity-75"
+                                style="color: white;">Contact</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5 class="fw-bold mb-3">Products</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="?category=Es Krim"
-                                class="text-white-50 text-decoration-none">Ice Cream</a></li>
-                        <li class="mb-2"><a href="?category=Bubuk Es Krim"
-                                class="text-white-50 text-decoration-none">Ice Cream Powder</a></li>
-                        <li class="mb-2"><a href="?category=Cone"
-                                class="text-white-50 text-decoration-none">Cones & Cups</a></li>
-                        <li class="mb-2"><a href="?category=Sendok"
-                                class="text-white-50 text-decoration-none">Accessories</a></li>
+                        <li class="mb-2"><a href="?category=Es Krim" class="text-decoration-none opacity-75"
+                                style="color: white;">Ice Cream</a></li>
+                        <li class="mb-2"><a href="?category=Bubuk Es Krim" class="text-decoration-none opacity-75"
+                                style="color: white;">Ice Cream Powder</a></li>
+                        <li class="mb-2"><a href="?category=Cone" class="text-decoration-none opacity-75"
+                                style="color: white;">Cones & Cups</a></li>
+                        <li class="mb-2"><a href="?category=Sendok" class="text-decoration-none opacity-75"
+                                style="color: white;">Accessories</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5 class="fw-bold mb-3">Contact Info</h5>
-                    <p class="text-white-50 mb-2">
-                        <i class="bi bi-geo-alt me-2"></i>Jakarta, Indonesia
+                    <p class="mb-2 opacity-75">
+                        <i class="bi bi-geo-alt me-2" style="color: var(--accent-pink);"></i>Jakarta, Indonesia
                     </p>
-                    <p class="text-white-50 mb-2">
-                        <i class="bi bi-telephone me-2"></i>+62 812 3456 7890
+                    <p class="mb-2 opacity-75">
+                        <i class="bi bi-telephone me-2" style="color: var(--accent-pink);"></i>+62 812 3456 7890
                     </p>
-                    <p class="text-white-50">
-                        <i class="bi bi-envelope me-2"></i>info@icecream.com
+                    <p class="opacity-75">
+                        <i class="bi bi-envelope me-2" style="color: var(--accent-pink);"></i>info@icecream.com
                     </p>
                 </div>
             </div>
 
-            <hr class="my-4 bg-white opacity-25">
+            <hr class="my-4 opacity-25">
 
             <div class="text-center">
-                <p class="text-white-50 mb-0">&copy; 2024 IceCream Distribution. All rights reserved.</p>
+                <p class="mb-0 opacity-75">&copy; 2024 IceCream Distribution. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
