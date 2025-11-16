@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Review;
+use App\Models\Cart;
 
 class User extends Authenticatable
 {
@@ -29,4 +31,6 @@ class User extends Authenticatable
     {
         return $this->hasOne(Cart::class);
     }
+
+    
 }

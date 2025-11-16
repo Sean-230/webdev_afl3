@@ -1,17 +1,28 @@
 <?php
 
+// database/seeders/WarehouseSeeder.php
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Warehouse;
+use App\Models\Product;
 
 class WarehouseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        //
+        $warehouse = Warehouse::factory()->create(['location' => 'Main Warehouse']);
+        $products = Product::all();
+
+        foreach ($products as $product) {
+            // attach with random quantity
+            $warehouse->products()->attach($product->id, [
+                'quantity' => rand(0, 200),
+                'batch_number' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }
+
