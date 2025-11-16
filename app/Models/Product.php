@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['name','description','price','sku','is_active'];
+    use HasFactory;
+    
+    protected $fillable = ['name','description','price','sku','is_active','image_path'];
 
     public function categories()
     {

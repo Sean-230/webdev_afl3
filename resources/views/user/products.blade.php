@@ -237,11 +237,13 @@
                                         </a>
 
                                         @foreach ($categories as $cat)
-                                            <a href="?category={{ $cat }}&search={{ request('search') }}&sort={{ request('sort') }}&order={{ request('order') }}"
-                                                class="list-group-item list-group-item-action border-0 category-item {{ request('category') == $cat ? 'active' : '' }}">
-                                                <i class="bi bi-folder me-2"></i>{{ $cat }}
+                                            <a href="?category={{ $cat->id }}&search={{ request('search') }}&sort={{ request('sort') }}&order={{ request('order') }}"
+                                                class="list-group-item list-group-item-action border-0 category-item {{ request('category') == $cat->id ? 'active' : '' }}">
+                                                <i class="bi bi-folder me-2"></i>{{ $cat->name }}
                                                 <span class="badge bg-secondary float-end">
-                                                    {{ \App\Models\Product::where('category', $cat)->count() }}
+                                                    {{ \App\Models\Product::whereHas('categories', function($q) use ($cat) {
+                                                        $q->where('categories.id', $cat->id);
+                                                    })->count() }}
                                                 </span>
                                             </a>
                                         @endforeach

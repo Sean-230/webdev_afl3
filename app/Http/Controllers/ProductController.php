@@ -13,7 +13,9 @@ class ProductController extends Controller
 
         // Filter by category
         if ($request->has('category') && $request->category != '') {
-            $query->where('category', $request->category);
+            $query->whereHas('categories', function($q) use ($request) {
+                $q->where('categories.id', $request->category);
+            });
         }
 
         // Search by name
@@ -25,12 +27,12 @@ class ProductController extends Controller
         $sortBy = $request->get('sort', 'name');
         $sortOrder = $request->get('order', 'asc');
         
-        if (in_array($sortBy, ['name', 'price', 'category'])) {
+        if (in_array($sortBy, ['name', 'price'])) {
             $query->orderBy($sortBy, $sortOrder);
         }
 
         $products = $query->paginate(12);
-        $categories = Product::select('category')->distinct()->pluck('category');
+        $categories = \App\Models\Category::all();
 
         return view('user.products', compact('products', 'categories'));
     }
@@ -38,7 +40,14 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::findOrFail($id);
-        $relatedProducts = Product::where('category', $product->category)
+        
+        // Get category IDs from the current product
+        $categoryIds = $product->categories->pluck('id');
+        
+        // Find related products that share at least one category
+        $relatedProducts = Product::whereHas('categories', function($q) use ($categoryIds) {
+                $q->whereIn('categories.id', $categoryIds);
+            })
             ->where('id', '!=', $product->id)
             ->limit(4)
             ->get();
