@@ -219,14 +219,14 @@
                                                 </div>
                                             @endif
 
-                                            <!-- Quick View Button -->
+                                            <!-- Quick View Button
                                             <div class="position-absolute bottom-0 end-0 p-3">
                                                 <a href="{{ route('products.show', $product->id) }}"
                                                     class="btn btn-light btn-sm rounded-circle"
                                                     style="width: 40px; height: 40px;">
                                                     <i class="bi bi-eye"></i>
                                                 </a>
-                                            </div>
+                                            </div> -->
                                         </div>
 
                                         <div class="card-body">

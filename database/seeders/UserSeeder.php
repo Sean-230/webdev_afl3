@@ -5,20 +5,27 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
     public function run()
     {
-        // Admin
-        User::factory()->admin()->create([
+        // Admin User
+        User::create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
+            'password' => Hash::make('password'),
+            'is_admin' => true,
         ]);
 
-        // Normal users
-        User::factory()->count(10)->create();
+        // Personal Test User - Sean
+        User::create([
+            'name' => 'sean',
+            'email' => 'sean.tandjaja2005@gmail.com',
+            'password' => Hash::make('12345678'),
+            'is_admin' => false,
+        ]);
     }
 }
 

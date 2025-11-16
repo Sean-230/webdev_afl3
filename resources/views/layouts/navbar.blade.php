@@ -29,6 +29,16 @@
             
             <div class="d-flex align-items-center ms-lg-3">
                 @auth
+                    <!-- Cart Icon -->
+                    <a href="{{ route('cart.index') }}" class="btn btn-outline-danger me-2 position-relative">
+                        <i class="bi bi-cart3"></i>
+                        @if(isset($cartCount) && $cartCount > 0)
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ $cartCount }}
+                            </span>
+                        @endif
+                    </a>
+                    
                     <!-- User Dropdown -->
                     <div class="dropdown">
                         <button class="btn btn-outline-danger dropdown-toggle d-flex align-items-center" type="button" 
@@ -37,14 +47,10 @@
                             {{ Auth::user()->name }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>My Profile</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-cart me-2"></i>My Cart</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-clock-history me-2"></i>Order History</a></li>
                             @if(Auth::user()->is_admin)
-                                <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="/admin/dashboard"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</a></li>
+                                <li><hr class="dropdown-divider"></li>
                             @endif
-                            <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf

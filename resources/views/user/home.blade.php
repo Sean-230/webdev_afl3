@@ -112,75 +112,34 @@
             </div>
 
             <div class="row g-4">
+                @foreach($products as $product)
                 <div class="col-md-6 col-lg-3">
                     <div class="product-card shadow-sm">
                         <div class="product-image-wrapper" style="background-color: var(--accent-peach);">
-                            <i class="bi bi-snow3" style="font-size: 5rem; color: var(--primary-teal);"></i>
-                            <span class="product-badge badge-pink">Popular</span>
+                            @if($product->image_path && file_exists(public_path($product->image_path)))
+                                <img src="{{ asset($product->image_path) }}" alt="{{ $product->name }}" class="w-100 h-100" style="object-fit: cover;">
+                            @else
+                                <i class="bi bi-snow3" style="font-size: 5rem; color: var(--primary-teal);"></i>
+                            @endif
+                            @if($loop->first)
+                                <span class="product-badge badge-pink">Popular</span>
+                            @endif
                         </div>
                         <div class="p-4">
-                            <h5 class="fw-bold mb-2" style="color: var(--primary-dark);">Es Krim Vanilla</h5>
+                            <h5 class="fw-bold mb-2" style="color: var(--primary-dark);">{{ $product->name }}</h5>
+                            <p class="text-muted small mb-3">{{ Str::limit($product->description, 50) }}</p>
                             <div class="mb-3">
-                                <span class="fs-4 fw-bold" style="color: var(--primary-teal);">Rp 12.000</span>
+                                <span class="fs-4 fw-bold" style="color: var(--primary-teal);">
+                                    Rp {{ number_format($product->price, 0, ',', '.') }}
+                                </span>
                             </div>
-                            <button class="btn btn-custom-pink w-100">
-                                <i class="bi bi-cart-plus me-2"></i>Add to Cart
-                            </button>
+                            <a href="{{ route('products.show', $product->id) }}" class="btn btn-custom-pink w-100">
+                                <i class="bi bi-eye me-2"></i>View Details
+                            </a>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card shadow-sm">
-                        <div class="product-image-wrapper" style="background-color: var(--accent-peach);">
-                            <i class="bi bi-snow3" style="font-size: 5rem; color: #8B4513;"></i>
-                            <span class="product-badge badge-teal">New</span>
-                        </div>
-                        <div class="p-4">
-                            <h5 class="fw-bold mb-2" style="color: var(--primary-dark);">Es Krim Coklat</h5>
-                            <div class="mb-3">
-                                <span class="fs-4 fw-bold" style="color: var(--primary-teal);">Rp 13.000</span>
-                            </div>
-                            <button class="btn btn-custom-pink w-100">
-                                <i class="bi bi-cart-plus me-2"></i>Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card shadow-sm">
-                        <div class="product-image-wrapper" style="background-color: var(--accent-peach);">
-                            <i class="bi bi-cup-straw" style="font-size: 5rem; color: var(--accent-pink);"></i>
-                        </div>
-                        <div class="p-4">
-                            <h5 class="fw-bold mb-2" style="color: var(--primary-dark);">Bubuk Es Krim 1kg</h5>
-                            <div class="mb-3">
-                                <span class="fs-4 fw-bold" style="color: var(--primary-teal);">Rp 85.000</span>
-                            </div>
-                            <button class="btn btn-custom-pink w-100">
-                                <i class="bi bi-cart-plus me-2"></i>Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="product-card shadow-sm">
-                        <div class="product-image-wrapper" style="background-color: var(--accent-peach);">
-                            <i class="bi bi-cone-striped" style="font-size: 5rem; color: #F4A460;"></i>
-                        </div>
-                        <div class="p-4">
-                            <h5 class="fw-bold mb-2" style="color: var(--primary-dark);">Cone Wafer (100pcs)</h5>
-                            <div class="mb-3">
-                                <span class="fs-4 fw-bold" style="color: var(--primary-teal);">Rp 25.000</span>
-                            </div>
-                            <button class="btn btn-custom-pink w-100">
-                                <i class="bi bi-cart-plus me-2"></i>Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <div class="text-center mt-5">

@@ -10,9 +10,19 @@ class CategorySeeder extends Seeder
 {
     public function run()
     {
-        $names = ['eskrim','bubuk eskrim','cone','cup','sendok','tutup'];
-        foreach ($names as $name) {
-            Category::firstOrCreate(['name' => $name]);
+        $categories = [
+            'Ice Cream',
+            'Ice Cream Powder',
+            'Cones',
+            'Cups',
+            'Spoons',
+            'Lids',
+            'Toppings',
+            'Syrups'
+        ];
+        
+        foreach ($categories as $name) {
+            Category::create(['name' => $name]);
         }
     }
 }
