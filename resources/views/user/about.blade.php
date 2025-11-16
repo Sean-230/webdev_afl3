@@ -12,23 +12,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        :root {
-            --primary-dark: #1A3153;
-            --primary-teal: #0C5777;
-            --accent-pink: #EF93FF;
-            --accent-peach: #F6D4E4;
-        }
-
-        body {
-            background-color: #ffffff;
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/about.css') }}">
 </head>
 
 <body>

@@ -26,48 +26,44 @@
                     <a class="nav-link fw-medium text-dark px-2 {{ Request::is('contact') ? 'active' : '' }}" href="/contact">Contact</a>
                 </li>
             </ul>
-            <a href="/#products" class="btn btn-danger ms-lg-3">Get Started</a>
+            
+            <div class="d-flex align-items-center ms-lg-3">
+                @auth
+                    <!-- User Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-danger dropdown-toggle d-flex align-items-center" type="button" 
+                                id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-2"></i>
+                            {{ Auth::user()->name }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>My Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-cart me-2"></i>My Cart</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-clock-history me-2"></i>Order History</a></li>
+                            @if(Auth::user()->is_admin)
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/admin/dashboard"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</a></li>
+                            @endif
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-outline-danger me-2">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                    </a>
+                    <a href="{{ route('register') }}" class="btn btn-danger">
+                        <i class="bi bi-person-plus me-1"></i>Register
+                    </a>
+                @endauth
+            </div>
         </div>
     </div>
 </nav>
-
-<style>
-    .navbar {
-        transition: all 0.3s ease;
-    }
-
-    .nav-link {
-        transition: color 0.3s ease;
-        position: relative;
-    }
-
-    .nav-link:hover {
-        color: #FF6B6B !important;
-    }
-
-    .nav-link.active {
-        color: #FF6B6B !important;
-        font-weight: 600;
-    }
-
-    .nav-link.active::after {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 30px;
-        height: 3px;
-        background: #FF6B6B;
-        border-radius: 2px;
-    }
-
-    .btn-danger {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .btn-danger:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
-    }
-</style>

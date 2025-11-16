@@ -1,0 +1,89 @@
+/* Main Application Styles */
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --primary-dark: #1A3153;
+    --primary-teal: #0C5777;
+    --accent-pink: #EF93FF;
+    --accent-peach: #F6D4E4;
+}
+
+body {
+    background-color: #ffffff;
+}
+
+/* Navbar Styles */
+.navbar {
+    transition: all 0.3s ease;
+}
+
+.nav-link {
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #FF6B6B !important;
+}
+
+.nav-link.active {
+    color: #FF6B6B !important;
+    font-weight: 600;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 3px;
+    background: #FF6B6B;
+    border-radius: 2px;
+}
+
+.btn-danger {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* Custom Buttons */
+.btn-custom-pink {
+    background-color: var(--accent-pink);
+    color: var(--primary-dark);
+    border: none;
+    padding: 12px 30px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-custom-pink:hover {
+    background-color: #e080f0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(239, 147, 255, 0.4);
+}
+
+.btn-outline-custom {
+    border: 2px solid var(--accent-pink);
+    color: var(--primary-dark);
+    background: transparent;
+    padding: 12px 30px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-custom:hover {
+    background-color: var(--accent-pink);
+    color: var(--primary-dark);
+    transform: translateY(-2px);
+}

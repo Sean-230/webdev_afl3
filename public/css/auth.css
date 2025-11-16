@@ -1,0 +1,99 @@
+/* Authentication Pages Styles */
+
+.auth-body {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-teal) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.auth-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+}
+
+.auth-left {
+    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-peach) 100%);
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-left h2 {
+    color: var(--primary-dark);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.auth-left p {
+    color: var(--primary-dark);
+    opacity: 0.8;
+}
+
+.auth-right {
+    padding: 60px;
+}
+
+.auth-right h3 {
+    color: var(--primary-dark);
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.form-control {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--accent-pink);
+    box-shadow: 0 0 0 0.2rem rgba(239, 147, 255, 0.25);
+}
+
+.btn-login,
+.btn-register {
+    background-color: var(--accent-pink);
+    color: var(--primary-dark);
+    border: none;
+    padding: 12px 30px;
+    font-weight: 600;
+    border-radius: 10px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover,
+.btn-register:hover {
+    background-color: #e080f0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(239, 147, 255, 0.4);
+}
+
+.form-check-input:checked {
+    background-color: var(--accent-pink);
+    border-color: var(--accent-pink);
+}
+
+.text-link {
+    color: var(--primary-teal);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.text-link:hover {
+    color: var(--accent-pink);
+}
+
+.alert {
+    border-radius: 10px;
+}

@@ -13,90 +13,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-
-    <style>
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        :root {
-            --primary-dark: #1A3153;
-            --primary-teal: #0C5777;
-            --accent-pink: #EF93FF;
-            --accent-peach: #F6D4E4;
-        }
-
-        body {
-            background-color: #ffffff;
-        }
-
-        .review-card {
-            border: none;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            height: 100%;
-        }
-
-        .review-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
-        }
-
-        .rating-star {
-            font-size: 1.2rem;
-        }
-
-        .reviewer-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .verified-badge {
-            background-color: var(--primary-teal);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .stats-card {
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .filter-btn {
-            border: 2px solid var(--accent-peach);
-            background-color: white;
-            color: var(--primary-dark);
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background-color: var(--accent-pink);
-            border-color: var(--accent-pink);
-            color: var(--primary-dark);
-        }
-
-        .progress-bar-custom {
-            background-color: var(--accent-peach);
-        }
-
-        .progress-bar-fill {
-            background-color: var(--accent-pink);
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/review.css') }}">
 </head>
 
 <body>
