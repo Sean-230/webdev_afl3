@@ -19,7 +19,7 @@ class CartController extends \Illuminate\Routing\Controller
     {
         $cart = $this->getOrCreateCart();
         $cartItems = $cart->items()->with('product')->get();
-        $total = $cartItems->sum(fn($item) => $item->quantity * $item->product->price);
+        $total = $cartItems->sum(fn($item) => $item->quantity * $item->price);
 
         return view('user.cart', compact('cartItems', 'total'));
     }
@@ -30,19 +30,30 @@ class CartController extends \Illuminate\Routing\Controller
             'quantity' => 'required|integer|min:1|max:100'
         ]);
 
-        Product::findOrFail($productId);
+        $product = Product::findOrFail($productId);
+        
+        // Check stock availability
+        if ($product->stock < $validated['quantity']) {
+            return redirect()->back()->with('error', 'Insufficient stock available.');
+        }
+        
         $cart = $this->getOrCreateCart();
 
         // Check if product already in cart
         $cartItem = $cart->items()->where('product_id', $productId)->first();
 
         if ($cartItem) {
+            // Check stock for updated quantity
+            if ($product->stock < ($cartItem->quantity + $validated['quantity'])) {
+                return redirect()->back()->with('error', 'Insufficient stock available.');
+            }
             $cartItem->increment('quantity', $validated['quantity']);
         } else {
             CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $productId,
-                'quantity' => $validated['quantity']
+                'quantity' => $validated['quantity'],
+                'price' => $product->price // Store price snapshot
             ]);
         }
 
@@ -60,6 +71,11 @@ class CartController extends \Illuminate\Routing\Controller
         // Verify this cart item belongs to the user's cart
         if ($cartItem->cart->user_id !== Auth::id()) {
             abort(403);
+        }
+
+        // Check stock availability
+        if ($cartItem->product->stock < $validated['quantity']) {
+            return redirect()->route('cart.index')->with('error', 'Insufficient stock available.');
         }
 
         $cartItem->update($validated);

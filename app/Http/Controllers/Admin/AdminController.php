@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -17,12 +18,19 @@ class AdminController extends Controller
             abort(403, 'Unauthorized access.');
         }
 
-        $totalProducts = Product::count();
-        $lowStockProducts = Product::where('stock', '<', 50)->count();
-        $outOfStock = Product::where('stock', 0)->count();
+        // Optimized single query for product stats
+        $productStats = DB::table('products')
+            ->selectRaw('COUNT(*) as total, SUM(CASE WHEN stock < 50 THEN 1 ELSE 0 END) as low_stock, SUM(CASE WHEN stock = 0 THEN 1 ELSE 0 END) as out_of_stock')
+            ->first();
+        
         $totalOrders = Order::count();
 
-        return view('admin.dashboard', compact('totalProducts', 'lowStockProducts', 'outOfStock', 'totalOrders'));
+        return view('admin.dashboard', [
+            'totalProducts' => $productStats->total,
+            'lowStockProducts' => $productStats->low_stock,
+            'outOfStock' => $productStats->out_of_stock,
+            'totalOrders' => $totalOrders
+        ]);
     }
 
     public function warehouse()
@@ -31,7 +39,7 @@ class AdminController extends Controller
             abort(403, 'Unauthorized access.');
         }
 
-        $products = Product::with('categories')->orderBy('name')->paginate(20);
+        $products = Product::with('categories')->orderBy('id')->paginate(20);
         $categories = Category::all();
 
         return view('admin.warehouse', compact('products', 'categories'));
@@ -42,6 +50,7 @@ class AdminController extends Controller
         if (!Auth::check() || !Auth::user()->is_admin) {
             abort(403, 'Unauthorized access.');
         }
+        
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -49,7 +58,7 @@ class AdminController extends Controller
             'stock' => 'required|integer|min:0',
             'is_instock' => 'boolean',
             'image_path' => 'nullable|string',
-            'categories' => 'required|array',
+            'categories' => 'required|array|min:1',
         ]);
 
         $product = Product::create([
@@ -57,7 +66,7 @@ class AdminController extends Controller
             'description' => $validated['description'],
             'price' => $validated['price'],
             'stock' => $validated['stock'],
-            'is_instock' => $request->has('is_instock'),
+            'is_instock' => $validated['stock'] > 0,
             'image_path' => $validated['image_path'] ?? 'images/products/default.jpg',
         ]);
 

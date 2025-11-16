@@ -20,4 +20,10 @@ class CartItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    // Accessor to get price from product if not set
+    public function getPriceAttribute($value)
+    {
+        return $value ?? $this->product->price;
+    }
 }

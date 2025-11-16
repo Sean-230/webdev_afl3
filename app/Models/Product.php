@@ -10,6 +10,8 @@ class Product extends Model
     use HasFactory;
     
     protected $fillable = ['name','description','price','stock','is_instock','image_path'];
+    
+    protected $appends = ['average_rating', 'review_count'];
 
     public function categories()
     {
@@ -19,5 +21,23 @@ class Product extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    // Accessor for average rating
+    public function getAverageRatingAttribute()
+    {
+        if (!$this->relationLoaded('reviews')) {
+            return $this->reviews()->avg('rating') ?? 0;
+        }
+        return $this->reviews->avg('rating') ?? 0;
+    }
+
+    // Accessor for review count
+    public function getReviewCountAttribute()
+    {
+        if (!$this->relationLoaded('reviews')) {
+            return $this->reviews()->count();
+        }
+        return $this->reviews->count();
     }
 }

@@ -55,7 +55,7 @@
                             <!-- Price -->
                             <div class="col-md-2">
                                 <p class="fw-bold mb-0" style="color: var(--primary-teal);">
-                                    Rp {{ number_format($item->product->price, 0, ',', '.') }}
+                                    Rp {{ number_format($item->price, 0, ',', '.') }}
                                 </p>
                             </div>
 
@@ -73,7 +73,7 @@
                             <!-- Subtotal & Remove -->
                             <div class="col-md-2 text-end">
                                 <p class="fw-bold mb-2" style="color: var(--primary-dark);">
-                                    Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}
+                                    Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}
                                 </p>
                                 <form action="{{ route('cart.remove', $item->id) }}" method="POST" class="d-inline">
                                     @csrf
