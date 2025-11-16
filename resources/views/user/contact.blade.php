@@ -198,10 +198,10 @@
 
                                     <!-- Address -->
                                     <div class="d-flex mb-4">
-                                        <div class="contact-icon-box icon-dark flex-shrink-0 me-3">
+                                        <div class="contact-icon-box icon-dark shrink-0 me-3">
                                             <i class="bi bi-geo-alt-fill"></i>
                                         </div>
-                                        <div class="flex-grow-1">
+                                        <div class="grow">
                                             <h5 class="fw-semibold mb-1" style="color: var(--primary-dark);">Address
                                             </h5>
                                             <p class="text-muted mb-0">Jl. Raya Distribution No. 123<br>Jakarta
@@ -211,10 +211,10 @@
 
                                     <!-- Phone -->
                                     <div class="d-flex mb-4">
-                                        <div class="contact-icon-box icon-teal flex-shrink-0 me-3">
+                                        <div class="contact-icon-box icon-teal shrink-0 me-3">
                                             <i class="bi bi-telephone-fill"></i>
                                         </div>
-                                        <div class="flex-grow-1">
+                                        <div class="grow">
                                             <h5 class="fw-semibold mb-1" style="color: var(--primary-dark);">Phone</h5>
                                             <p class="text-muted mb-1">+62 812 3456 7890</p>
                                             <p class="text-muted mb-0">+62 821 9876 5432</p>
@@ -223,10 +223,10 @@
 
                                     <!-- Email -->
                                     <div class="d-flex mb-4">
-                                        <div class="contact-icon-box icon-pink flex-shrink-0 me-3">
+                                        <div class="contact-icon-box icon-pink shrink-0 me-3">
                                             <i class="bi bi-envelope-fill"></i>
                                         </div>
-                                        <div class="flex-grow-1">
+                                        <div class="grow">
                                             <h5 class="fw-semibold mb-1" style="color: var(--primary-dark);">Email</h5>
                                             <p class="text-muted mb-1">info@icecream.com</p>
                                             <p class="text-muted mb-0">support@icecream.com</p>
@@ -235,10 +235,10 @@
 
                                     <!-- Working Hours -->
                                     <div class="d-flex">
-                                        <div class="contact-icon-box icon-peach flex-shrink-0 me-3">
+                                        <div class="contact-icon-box icon-peach shrink-0 me-3">
                                             <i class="bi bi-clock-fill"></i>
                                         </div>
-                                        <div class="flex-grow-1">
+                                        <div class="grow">
                                             <h5 class="fw-semibold mb-1" style="color: var(--primary-dark);">Working
                                                 Hours</h5>
                                             <p class="text-muted mb-1">Monday - Friday: 8:00 AM - 6:00 PM</p>

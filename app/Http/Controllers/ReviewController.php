@@ -23,35 +23,29 @@ class ReviewController extends Controller
 
     public function store(Request $request, $productId)
     {
-        $request->validate([
+        $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'required|string|max:1000'
         ]);
 
-        $product = Product::findOrFail($productId);
+        Product::findOrFail($productId);
 
         // Check if user already reviewed this product
-        $existingReview = Review::where('user_id', Auth::id())
-            ->where('product_id', $productId)
-            ->first();
-
-        if ($existingReview) {
+        if (Review::where('user_id', Auth::id())->where('product_id', $productId)->exists()) {
             return redirect()->back()->with('error', 'You have already reviewed this product!');
         }
 
-        Review::create([
+        Review::create(array_merge($validated, [
             'user_id' => Auth::id(),
             'product_id' => $productId,
-            'rating' => $request->rating,
-            'comment' => $request->comment
-        ]);
+        ]));
 
         return redirect()->back()->with('success', 'Thank you for your review!');
     }
 
     public function update(Request $request, $reviewId)
     {
-        $request->validate([
+        $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'required|string|max:1000'
         ]);
@@ -63,10 +57,7 @@ class ReviewController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $review->update([
-            'rating' => $request->rating,
-            'comment' => $request->comment
-        ]);
+        $review->update($validated);
 
         return redirect()->back()->with('success', 'Review updated successfully!');
     }

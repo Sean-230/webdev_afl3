@@ -13,31 +13,57 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link fw-medium text-dark px-2 {{ Request::is('/') ? 'active' : '' }}" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-medium text-dark px-2 {{ Request::is('products*') ? 'active' : '' }}" href="/products">Products</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-medium text-dark px-2 {{ Request::is('review') ? 'active' : '' }}" href="/review">Review</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-medium text-dark px-2 {{ Request::is('contact') ? 'active' : '' }}" href="/contact">Contact</a>
-                </li>
+                @auth
+                    @if(Auth::user()->is_admin)
+                        <li class="nav-item">
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('admin/dashboard') ? 'active' : '' }}" href="/admin/dashboard">Admin Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('admin/warehouse') ? 'active' : '' }}" href="/admin/warehouse">Warehouse</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('/') ? 'active' : '' }}" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('products*') ? 'active' : '' }}" href="/products">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('review') ? 'active' : '' }}" href="/review">Review</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('contact') ? 'active' : '' }}" href="/contact">Contact</a>
+                        </li>
+                    @endif
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('/') ? 'active' : '' }}" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('products*') ? 'active' : '' }}" href="/products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('review') ? 'active' : '' }}" href="/review">Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('contact') ? 'active' : '' }}" href="/contact">Contact</a>
+                    </li>
+                @endauth
             </ul>
             
             <div class="d-flex align-items-center ms-lg-3">
                 @auth
-                    <!-- Cart Icon -->
-                    <a href="{{ route('cart.index') }}" class="btn btn-outline-danger me-2 position-relative">
-                        <i class="bi bi-cart3"></i>
-                        @if(isset($cartCount) && $cartCount > 0)
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                {{ $cartCount }}
-                            </span>
-                        @endif
-                    </a>
+                    @if(!Auth::user()->is_admin)
+                        <!-- Cart Icon (only for regular users) -->
+                        <a href="{{ route('cart.index') }}" class="btn btn-outline-danger me-2 position-relative">
+                            <i class="bi bi-cart3"></i>
+                            @if(isset($cartCount) && $cartCount > 0)
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $cartCount }}
+                                </span>
+                            @endif
+                        </a>
+                    @endif
                     
                     <!-- User Dropdown -->
                     <div class="dropdown">
@@ -47,12 +73,11 @@
                             {{ Auth::user()->name }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            @if(Auth::user()->is_admin)
-                                <li><a class="dropdown-item" href="/admin/dashboard"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</a></li>
+                            @if(!Auth::user()->is_admin)
+                                <li><a class="dropdown-item" href="{{ route('orders.index') }}"><i class="bi bi-box-seam me-2"></i>My Orders</a></li>
+                                <li><a class="dropdown-item" href="{{ route('account.change-password') }}"><i class="bi bi-shield-lock me-2"></i>Change Password</a></li>
                                 <li><hr class="dropdown-divider"></li>
                             @endif
-                            <li><a class="dropdown-item" href="{{ route('account.change-password') }}"><i class="bi bi-shield-lock me-2"></i>Change Password</a></li>
-                            <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf

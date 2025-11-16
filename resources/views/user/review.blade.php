@@ -78,7 +78,7 @@
                             </a>
                         </div>
 
-                        <p class="text-muted flex-grow-1 mb-3" style="font-size: 0.95rem;">{{ $review->comment }}</p>
+                        <p class="text-muted grow mb-3" style="font-size: 0.95rem;">{{ $review->comment }}</p>
 
                         @auth
                             @if($review->user_id === Auth::id())

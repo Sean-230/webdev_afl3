@@ -19,35 +19,30 @@ class CartController extends \Illuminate\Routing\Controller
     {
         $cart = $this->getOrCreateCart();
         $cartItems = $cart->items()->with('product')->get();
-        $total = $cartItems->sum(function($item) {
-            return $item->quantity * $item->product->price;
-        });
+        $total = $cartItems->sum(fn($item) => $item->quantity * $item->product->price);
 
         return view('user.cart', compact('cartItems', 'total'));
     }
 
     public function add(Request $request, $productId)
     {
-        $request->validate([
+        $validated = $request->validate([
             'quantity' => 'required|integer|min:1|max:100'
         ]);
 
-        $product = Product::findOrFail($productId);
+        Product::findOrFail($productId);
         $cart = $this->getOrCreateCart();
 
         // Check if product already in cart
         $cartItem = $cart->items()->where('product_id', $productId)->first();
 
         if ($cartItem) {
-            // Update quantity
-            $cartItem->quantity += $request->quantity;
-            $cartItem->save();
+            $cartItem->increment('quantity', $validated['quantity']);
         } else {
-            // Create new cart item
             CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $productId,
-                'quantity' => $request->quantity
+                'quantity' => $validated['quantity']
             ]);
         }
 
@@ -56,7 +51,7 @@ class CartController extends \Illuminate\Routing\Controller
 
     public function update(Request $request, $cartItemId)
     {
-        $request->validate([
+        $validated = $request->validate([
             'quantity' => 'required|integer|min:1|max:100'
         ]);
 
@@ -67,8 +62,7 @@ class CartController extends \Illuminate\Routing\Controller
             abort(403);
         }
 
-        $cartItem->quantity = $request->quantity;
-        $cartItem->save();
+        $cartItem->update($validated);
 
         return redirect()->route('cart.index')->with('success', 'Cart updated successfully!');
     }

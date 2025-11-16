@@ -43,7 +43,13 @@
                                         {{ $item->product->name }}
                                     </a>
                                 </h5>
-                                <p class="text-muted small mb-0">SKU: {{ $item->product->sku }}</p>
+                                <p class="text-muted small mb-0">
+                                    @if($item->product->stock > 0)
+                                        <span class="text-success"><i class="bi bi-check-circle"></i> In Stock</span>
+                                    @else
+                                        <span class="text-danger"><i class="bi bi-x-circle"></i> Out of Stock</span>
+                                    @endif
+                                </p>
                             </div>
 
                             <!-- Price -->
@@ -117,14 +123,21 @@
                             <span class="fw-bold fs-4" style="color: var(--primary-teal);">Rp {{ number_format($total, 0, ',', '.') }}</span>
                         </div>
 
-                        <div class="d-grid gap-2">
-                            <a href="#" class="btn btn-custom-pink btn-lg">
-                                <i class="bi bi-credit-card me-2"></i>Proceed to Checkout
-                            </a>
-                            <a href="/products" class="btn btn-outline-secondary">
-                                <i class="bi bi-arrow-left me-2"></i>Continue Shopping
-                            </a>
-                        </div>
+                        <form action="{{ route('orders.checkout') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="form-label small text-muted">Order Notes (Optional)</label>
+                                <textarea class="form-control form-control-sm" name="notes" rows="2" placeholder="Special instructions..."></textarea>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-custom-pink btn-lg">
+                                    <i class="bi bi-credit-card me-2"></i>Proceed to Checkout
+                                </button>
+                                <a href="/products" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left me-2"></i>Continue Shopping
+                                </a>
+                            </div>
+                        </form>
 
                         <!-- Payment Info -->
                         <div class="mt-4 p-3 rounded" style="background-color: #f8f9fa;">

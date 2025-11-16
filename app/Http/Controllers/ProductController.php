@@ -39,16 +39,20 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::with(['categories', 'reviews' => function($query) {
+            $query->with('user')->latest();
+        }])->findOrFail($id);
         
         // Get category IDs from the current product
         $categoryIds = $product->categories->pluck('id');
         
         // Find related products that share at least one category
-        $relatedProducts = Product::whereHas('categories', function($q) use ($categoryIds) {
+        $relatedProducts = Product::with('categories')
+            ->whereHas('categories', function($q) use ($categoryIds) {
                 $q->whereIn('categories.id', $categoryIds);
             })
             ->where('id', '!=', $product->id)
+            ->inRandomOrder()
             ->limit(4)
             ->get();
 

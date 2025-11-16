@@ -543,7 +543,7 @@
                 <a href="/products" class="btn btn-light btn-lg px-5" style="color: #1A3153;">
                     <i class="bi bi-box-seam me-2"></i>View Products
                 </a>
-                <a href="/contact" class="btn btn-lg px-5 text-white border border-white border-2">
+                <a href="/contact" class="btn btn-lg px-5 text-white border-white border-2">
                     <i class="bi bi-telephone me-2"></i>Contact Us
                 </a>
             </div>

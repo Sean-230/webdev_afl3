@@ -57,8 +57,15 @@
                         @endforeach
                     </div>
 
-                    <!-- SKU -->
-                    <p class="text-muted mb-3">SKU: {{ $product->sku }}</p>
+                    <!-- Stock Availability -->
+                    <p class="text-muted mb-3">
+                        <i class="bi bi-box-seam me-2"></i>
+                        @if($product->stock > 0)
+                            <span class="text-success">{{ $product->stock }} units in stock</span>
+                        @else
+                            <span class="text-danger">Out of stock</span>
+                        @endif
+                    </p>
 
                     <!-- Price -->
                     <div class="mb-4">
