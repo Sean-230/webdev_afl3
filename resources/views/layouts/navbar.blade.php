@@ -51,6 +51,8 @@
                                 <li><a class="dropdown-item" href="/admin/dashboard"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</a></li>
                                 <li><hr class="dropdown-divider"></li>
                             @endif
+                            <li><a class="dropdown-item" href="{{ route('account.change-password') }}"><i class="bi bi-shield-lock me-2"></i>Change Password</a></li>
+                            <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf

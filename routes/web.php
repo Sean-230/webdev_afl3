@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Models\Product;
 
 // Public routes
@@ -33,6 +35,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
+    Route::get('/forgot-password', [PasswordResetController::class, 'showResetForm'])->name('password.request');
+    Route::post('/forgot-password', [PasswordResetController::class, 'reset'])->name('password.reset');
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
@@ -48,5 +52,10 @@ Route::middleware('auth')->group(function () {
     // Review routes
     Route::post('/reviews/{product}', [ReviewController::class, 'store'])->name('reviews.store');
     Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    
+    // Account management routes
+    Route::get('/account/change-password', [AccountController::class, 'showChangePassword'])->name('account.change-password');
+    Route::post('/account/change-password', [AccountController::class, 'changePassword']);
+    Route::delete('/account/delete', [AccountController::class, 'deleteAccount'])->name('account.delete');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
