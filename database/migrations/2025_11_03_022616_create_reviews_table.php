@@ -1,3 +1,4 @@
+<?php 
 // database/migrations/xxxx_xx_xx_xxxxxx_create_reviews_table.php
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,8 +16,6 @@ class CreateReviewsTable extends Migration
             $table->text('comment')->nullable();
             $table->timestamps();
 
-            // optional: prevent duplicate review by same user for same product
-            // $table->unique(['user_id','product_id']);
         });
     }
 
