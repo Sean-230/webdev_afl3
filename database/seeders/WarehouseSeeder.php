@@ -15,7 +15,6 @@ class WarehouseSeeder extends Seeder
         $products = Product::all();
 
         foreach ($products as $product) {
-            // attach with random quantity
             $warehouse->products()->attach($product->id, [
                 'quantity' => rand(0, 200),
                 'batch_number' => null,
