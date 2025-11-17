@@ -5,10 +5,10 @@
 }
 
 :root {
-    --primary-dark: #1A3153;
-    --primary-teal: #0C5777;
-    --accent-pink: #EF93FF;
-    --accent-peach: #F6D4E4;
+    --primary-dark: #173648;
+    --primary-blue: #0A5A99;
+    --primary-bright: #1C7FDD;
+    --accent-cyan: #0FB7D4;
 }
 
 body {
@@ -26,11 +26,11 @@ body {
 }
 
 .nav-link:hover {
-    color: #FF6B6B !important;
+    color: #1C7FDD !important;
 }
 
 .nav-link.active {
-    color: #FF6B6B !important;
+    color: #1C7FDD !important;
     font-weight: 600;
 }
 
@@ -42,7 +42,7 @@ body {
     transform: translateX(-50%);
     width: 30px;
     height: 3px;
-    background: #FF6B6B;
+    background: #1C7FDD;
     border-radius: 2px;
 }
 
@@ -57,8 +57,8 @@ body {
 
 /* Custom Buttons */
 .btn-custom-pink {
-    background-color: var(--accent-pink);
-    color: var(--primary-dark);
+    background-color: #1C7FDD;
+    color: white;
     border: none;
     padding: 12px 30px;
     font-weight: 600;
@@ -67,14 +67,15 @@ body {
 }
 
 .btn-custom-pink:hover {
-    background-color: #e080f0;
+    background-color: #0FB7D4;
     transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(239, 147, 255, 0.4);
+    box-shadow: 0 5px 20px rgba(28, 127, 221, 0.4);
+    color: white;
 }
 
 .btn-outline-custom {
-    border: 2px solid var(--accent-pink);
-    color: var(--primary-dark);
+    border: 2px solid #1C7FDD;
+    color: #173648;
     background: transparent;
     padding: 12px 30px;
     font-weight: 600;
@@ -83,8 +84,8 @@ body {
 }
 
 .btn-outline-custom:hover {
-    background-color: var(--accent-pink);
-    color: var(--primary-dark);
+    background-color: #1C7FDD;
+    color: white;
     transform: translateY(-2px);
 }
 
@@ -106,10 +107,10 @@ body {
 }
 
 .pagination .page-item.active .page-link {
-    background-color: var(--primary-teal);
-    border-color: var(--primary-teal);
+    background-color: #1C7FDD;
+    border-color: #1C7FDD;
 }
 
 .pagination .page-link:hover {
-    color: var(--primary-teal);
+    color: #1C7FDD;
 }
