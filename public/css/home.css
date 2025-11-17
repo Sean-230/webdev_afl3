@@ -1,7 +1,7 @@
 /* Home Page Styles */
 
 .hero-section {
-    background-color: var(--primary-dark);
+    background-color: #173648;
     color: white;
     padding: 100px 0;
     margin-top: 76px;
@@ -19,7 +19,7 @@
 
 .btn-custom-outline:hover {
     background-color: white;
-    color: var(--primary-dark);
+    color: #173648;
 }
 
 .feature-card {
@@ -28,14 +28,14 @@
     padding: 30px;
     text-align: center;
     height: 100%;
-    border: 2px solid var(--accent-peach);
+    border: 2px solid rgba(10, 90, 153, 0.2);
     transition: all 0.3s ease;
 }
 
 .feature-card:hover {
-    border-color: var(--accent-pink);
+    border-color: #1C7FDD;
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(28, 127, 221, 0.2);
 }
 
 .feature-icon {
@@ -51,21 +51,21 @@
 }
 
 .icon-dark {
-    background-color: var(--primary-dark);
+    background-color: #173648;
 }
 
 .icon-teal {
-    background-color: var(--primary-teal);
+    background-color: #0A5A99;
 }
 
 .icon-pink {
-    background-color: var(--accent-pink);
-    color: var(--primary-dark);
+    background-color: #1C7FDD;
+    color: white;
 }
 
 .icon-peach {
-    background-color: var(--accent-peach);
-    color: var(--primary-dark);
+    background-color: #0FB7D4;
+    color: white;
 }
 
 .product-card {
@@ -79,11 +79,12 @@
 
 .product-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(28, 127, 221, 0.2);
 }
 
 .product-card img {
     height: 250px;
+    width: 100%;
     object-fit: cover;
 }
 
@@ -92,8 +93,8 @@
 }
 
 .product-card .badge {
-    background-color: var(--accent-pink);
-    color: var(--primary-dark);
+    background-color: #1C7FDD;
+    color: white;
     padding: 5px 15px;
     border-radius: 20px;
 }
@@ -118,12 +119,12 @@
 }
 
 .badge-pink {
-    background-color: var(--accent-pink);
-    color: var(--primary-dark);
+    background-color: #1C7FDD;
+    color: white;
 }
 
 .badge-teal {
-    background-color: var(--primary-teal);
+    background-color: #0FB7D4;
     color: white;
 }
 
@@ -153,11 +154,11 @@
 }
 
 .testimonial-card .stars {
-    color: #ffc107;
+    color: #0FB7D4;
 }
 
 .cta-section {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-teal) 100%);
+    background: linear-gradient(135deg, #173648 0%, #0A5A99 100%);
     color: white;
     padding: 80px 0;
     border-radius: 20px;
@@ -165,17 +166,17 @@
 }
 
 footer {
-    background-color: var(--primary-dark);
+    background-color: #173648;
     color: white;
     padding: 40px 0 20px;
 }
 
 footer a {
-    color: var(--accent-pink);
+    color: #1C7FDD;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 footer a:hover {
-    color: var(--accent-peach);
+    color: #0FB7D4;
 }
