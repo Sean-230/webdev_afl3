@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Models\Product;
+use App\Http\Controllers\ContactController;
 
 // Public routes
 Route::get('/', function () {
@@ -18,9 +19,8 @@ Route::get('/', function () {
     return view('user.home', compact('products'));
 })->name('home');
 
-Route::get('/contact', function () {
-    return view('user.contact');
-});
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 Route::get('/about', function () {
     return view('user.about');
@@ -45,28 +45,28 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
-// Cart routes
-Route::prefix('cart')->name('cart.')->middleware('auth')->group(function () {
-    Route::get('/', [CartController::class, 'index'])->name('index');
-    Route::post('/add/{product}', [CartController::class, 'add'])->name('add');
-    Route::put('/{cartItem}', [CartController::class, 'update'])->name('update');
-    Route::delete('/{cartItem}', [CartController::class, 'remove'])->name('remove');
-    Route::delete('/', [CartController::class, 'clear'])->name('clear');
-});
+    // Cart routes
+    Route::prefix('cart')->name('cart.')->middleware('auth')->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('index');
+        Route::post('/add/{product}', [CartController::class, 'add'])->name('add');
+        Route::put('/{cartItem}', [CartController::class, 'update'])->name('update');
+        Route::delete('/{cartItem}', [CartController::class, 'remove'])->name('remove');
+        Route::delete('/', [CartController::class, 'clear'])->name('clear');
+    });
 
-// Order routes
-Route::prefix('orders')->name('orders.')->middleware('auth')->group(function () {
-    Route::get('/', [OrderController::class, 'index'])->name('index');
-    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
-});
+    // Order routes
+    Route::prefix('orders')->name('orders.')->middleware('auth')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    });
 
-// Review routes    // Review routes
+    // Review routes    // Review routes
     Route::prefix('reviews')->name('reviews.')->group(function () {
         Route::post('/{product}', [ReviewController::class, 'store'])->name('store');
         Route::put('/{review}', [ReviewController::class, 'update'])->name('update');
         Route::delete('/{review}', [ReviewController::class, 'destroy'])->name('destroy');
     });
-    
+
     // Account management routes
     Route::prefix('account')->name('account.')->group(function () {
         Route::get('/change-password', [AccountController::class, 'showChangePassword'])->name('change-password');
