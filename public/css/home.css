@@ -1,10 +1,39 @@
 /* Home Page Styles */
 
 .hero-section {
-    background-color: #173648;
-    color: white;
-    padding: 100px 0;
-    margin-top: 76px;
+    position: relative;
+}
+
+/* Remove any remaining gradient styles */
+* {
+    background-image: none !important;
+}
+
+.card {
+    border: none !important;
+}
+
+/* Ensure all backgrounds are solid */
+section {
+    background-image: none !important;
+}
+
+/* Ensure solid colors only */
+section {
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Override any gradient styles */
+* {
+    background-image: none !important;
+}
+
+/* Keep only solid background colors */
+.hero-section,
+.trust-section,
+.stats-section {
+    background-image: none !important;
 }
 
 .btn-custom-outline {
@@ -155,14 +184,6 @@
 
 .testimonial-card .stars {
     color: #0FB7D4;
-}
-
-.cta-section {
-    background: linear-gradient(135deg, #173648 0%, #0A5A99 100%);
-    color: white;
-    padding: 80px 0;
-    border-radius: 20px;
-    margin: 50px 0;
 }
 
 footer {
