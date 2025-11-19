@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-lg bg-white shadow-sm fixed-top py-3">
     <div class="container">
-        <a class="navbar-brand fw-bold fs-4 text-danger d-flex align-items-center" href="/">
-            <img src="{{ asset('images/logo_transparan.png') }}" alt="Depo Es Krim" width="40" height="40"
-                class="me-2">
+        <a class="navbar-brand fw-bold fs-4 d-flex align-items-center" href="/" style="color: #173648;">
+            <img src="{{ asset('images/logo.png') }}" alt="Depo Es Krim" width="50" height="50" class="me-2"
+                style="object-fit: contain;">
             Depo Es Krim
         </a>
 
@@ -14,86 +14,87 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 @auth
-                    @if(Auth::user()->is_admin)
+                    @if (Auth::user()->is_admin)
                         <li class="nav-item">
-                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('admin/dashboard') ? 'active' : '' }}" href="/admin/dashboard">Admin Dashboard</a>
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('admin/dashboard') ? 'active' : '' }}"
+                                href="/admin/dashboard">Dashboard Admin</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('admin/warehouse') ? 'active' : '' }}" href="/admin/warehouse">Warehouse</a>
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('admin/warehouse') ? 'active' : '' }}"
+                                href="/admin/warehouse">Gudang</a>
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('/') ? 'active' : '' }}" href="/">Home</a>
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('/') ? 'active' : '' }}"
+                                href="/">Beranda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('products*') ? 'active' : '' }}" href="/products">Products</a>
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('products*') ? 'active' : '' }}"
+                                href="/products">Produk</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('review') ? 'active' : '' }}" href="/review">Review</a>
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('review') ? 'active' : '' }}"
+                                href="/review">Review</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('contact') ? 'active' : '' }}" href="/contact">Contact</a>
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('contact') ? 'active' : '' }}"
+                                href="/contact">Kontak</a>
                         </li>
                     @endif
                 @else
                     <li class="nav-item">
-                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('/') ? 'active' : '' }}" href="/">Home</a>
+                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('/') ? 'active' : '' }}"
+                            href="/">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('products*') ? 'active' : '' }}" href="/products">Products</a>
+                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('products*') ? 'active' : '' }}"
+                            href="/products">Produk</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('review') ? 'active' : '' }}" href="/review">Review</a>
+                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('review') ? 'active' : '' }}"
+                            href="/review">Review</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('contact') ? 'active' : '' }}" href="/contact">Contact</a>
+                        <a class="nav-link fw-medium text-dark px-2 {{ Request::is('contact') ? 'active' : '' }}"
+                            href="/contact">Kontak</a>
                     </li>
                 @endauth
             </ul>
-            
-            <div class="d-flex align-items-center ms-lg-3">
+
+            <div class="d-flex gap-2 ms-lg-3">
                 @auth
-                    @if(!Auth::user()->is_admin)
-                        <!-- Cart Icon (only for regular users) -->
-                        <a href="{{ route('cart.index') }}" class="btn btn-outline-danger me-2 position-relative">
-                            <i class="bi bi-cart3"></i>
-                            @if(isset($cartCount) && $cartCount > 0)
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ $cartCount }}
-                                </span>
-                            @endif
-                        </a>
-                    @endif
-                    
-                    <!-- User Dropdown -->
                     <div class="dropdown">
-                        <button class="btn btn-outline-danger dropdown-toggle d-flex align-items-center" type="button" 
-                                id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-custom-primary dropdown-toggle d-flex align-items-center" type="button"
+                            id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle me-2"></i>
                             {{ Auth::user()->name }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            @if(!Auth::user()->is_admin)
-                                <li><a class="dropdown-item" href="{{ route('orders.index') }}"><i class="bi bi-box-seam me-2"></i>My Orders</a></li>
-                                <li><a class="dropdown-item" href="{{ route('account.change-password') }}"><i class="bi bi-shield-lock me-2"></i>Change Password</a></li>
-                                <li><hr class="dropdown-divider"></li>
+                            @if (!Auth::user()->is_admin)
+                                <li><a class="dropdown-item" href="{{ route('orders.index') }}"><i
+                                            class="bi bi-box-seam me-2"></i>Pesanan Saya</a></li>
+                                <li><a class="dropdown-item" href="{{ route('account.change-password') }}"><i
+                                            class="bi bi-shield-lock me-2"></i>Ubah Password</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                             @endif
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button type="submit" class="dropdown-item text-danger">
-                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                        <i class="bi bi-box-arrow-right me-2"></i>Keluar
                                     </button>
                                 </form>
                             </li>
                         </ul>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-outline-danger me-2">
-                        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                    <a href="{{ route('login') }}" class="btn btn-outline-custom-primary">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Masuk
                     </a>
-                    <a href="{{ route('register') }}" class="btn btn-danger">
-                        <i class="bi bi-person-plus me-1"></i>Register
+                    <a href="{{ route('register') }}" class="btn btn-custom-primary">
+                        <i class="bi bi-person-plus me-1"></i>Daftar
                     </a>
                 @endauth
             </div>
