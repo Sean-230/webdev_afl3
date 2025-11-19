@@ -1,113 +1,169 @@
 ﻿@extends('layouts.app')
 
-@section('title', 'Reviews')
+@section('title', 'Ulasan Pelanggan')
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/review.css') }}">
+@endpush
 
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/review.css') }}">
-
-<section class="text-white py-5" style="background-color: var(--primary-dark);">
-    <div class="container py-5">
-        <h1 class="display-4 fw-bold mb-3">Customer Reviews</h1>
-        <p class="lead mb-0">See what our customers say about our products</p>
-    </div>
-</section>
-
-<section class="py-5" style="background-color: var(--accent-peach);">
-    <div class="container py-4">
-        <div class="row justify-content-center">
-            <div class="col-lg-4">
-                <div class="card border-0 shadow-sm text-center p-4">
-                    <h6 class="text-muted mb-2">OVERALL RATING</h6>
-                    <div class="display-1 fw-bold mb-2" style="color: var(--primary-dark);">
-                        {{ $totalReviews > 0 ? number_format($averageRating, 1) : 'N/A' }}
+    <!-- Hero Section -->
+    <section class="review-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <nav aria-label="breadcrumb" class="mb-3">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ route('home') }}" class="breadcrumb-link">Beranda</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Ulasan</li>
+                        </ol>
+                    </nav>
+                    <h1 class="review-hero-title">Ulasan Pelanggan</h1>
+                    <p class="review-hero-subtitle">
+                        Lihat apa yang pelanggan kami katakan tentang produk dan layanan distribusi es krim kami.
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="hero-stat-card">
+                                <i class="bi bi-star-fill hero-stat-icon"></i>
+                                <h5 class="hero-stat-title">
+                                    {{ $totalReviews > 0 ? number_format($averageRating, 1) : 'N/A' }}
+                                </h5>
+                                <p class="hero-stat-subtitle">Rating Rata-rata</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="hero-stat-card hero-stat-card-secondary">
+                                <i class="bi bi-chat-left-text-fill hero-stat-icon"></i>
+                                <h5 class="hero-stat-title">{{ $totalReviews }}</h5>
+                                <p class="hero-stat-subtitle">Total Ulasan</p>
+                            </div>
+                        </div>
                     </div>
-                    @if($totalReviews > 0)
-                    <div class="mb-3">
-                        @for($i = 1; $i <= 5; $i++)
-                            <i class="bi bi-star{{ $i <= round($averageRating) ? '-fill' : '' }}" style="color: var(--accent-pink);"></i>
-                        @endfor
-                    </div>
-                    <p class="text-muted mb-0">Based on {{ $totalReviews }} reviews</p>
-                    @else
-                    <p class="text-muted mb-0">No reviews yet</p>
-                    @endif
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="py-5">
-    <div class="container">
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+    <!-- Reviews Section -->
+    <section class="review-section">
+        <div class="container py-4">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
 
-        <h2 class="fw-bold mb-4" style="color: var(--primary-dark);">All Reviews</h2>
-        
-        @if($reviews->count() > 0)
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            @foreach($reviews as $review)
-            <div class="col">
-                <div class="card h-100 shadow-sm hover-card" style="transition: transform 0.2s, box-shadow 0.2s;">
-                    <div class="card-body d-flex flex-column p-4">
-                        <div class="text-center mb-3">
-                            <div class="d-flex align-items-center justify-content-center mb-2">
-                                <h5 class="fw-bold mb-0 me-2" style="color: var(--primary-dark);">
-                                    {{ $review->user->name }}
-                                </h5>
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-circle me-2"></i>{{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            @if ($reviews->count() > 0)
+                <div class="row g-4">
+                    @foreach ($reviews as $review)
+                        <div class="col-lg-4 col-md-6">
+                            <div class="review-card">
+                                <!-- User Info -->
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="review-avatar me-3">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1 fw-bold review-author-name">
+                                            {{ $review->user->name }}
+                                            @auth
+                                                @if ($review->user_id === Auth::id())
+                                                    <span class="badge bg-info ms-2">Anda</span>
+                                                @endif
+                                            @endauth
+                                        </h6>
+                                        <small class="text-muted">{{ $review->created_at->format('d M Y') }}</small>
+                                    </div>
+                                </div>
+
+                                <!-- Product Info -->
+                                <div class="review-product-info mb-3">
+                                    <a href="{{ route('products.show', $review->product->id) }}"
+                                        class="text-decoration-none">
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-box-seam me-2" style="color: #1C7FDD;"></i>
+                                            <span class="review-product-name">{{ $review->product->name }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Rating Stars -->
+                                <div class="review-rating mb-3">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <i class="bi bi-star{{ $i <= $review->rating ? '-fill' : '' }}"
+                                            style="color: #ffc107; font-size: 1.1rem;"></i>
+                                    @endfor
+                                </div>
+
+                                <!-- Review Comment -->
+                                <p class="review-comment mb-3">{{ $review->comment }}</p>
+
+                                <!-- Action Buttons (if user owns this review) -->
                                 @auth
-                                    @if($review->user_id === Auth::id())
-                                        <span class="badge bg-info">You</span>
+                                    @if ($review->user_id === Auth::id())
+                                        <div class="review-actions">
+                                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                                data-bs-target="#editReviewModal{{ $review->id }}">
+                                                <i class="bi bi-pencil me-1"></i>Edit
+                                            </button>
+                                            <form action="{{ route('reviews.destroy', $review->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                    onclick="return confirm('Hapus ulasan ini?')">
+                                                    <i class="bi bi-trash me-1"></i>Hapus
+                                                </button>
+                                            </form>
+                                        </div>
                                     @endif
                                 @endauth
                             </div>
-                            <div class="mb-2">
-                                @for($i = 1; $i <= 5; $i++)
-                                    <i class="bi bi-star{{ $i <= $review->rating ? '-fill' : '' }}" style="color: #ffc107; font-size: 1.2rem;"></i>
-                                @endfor
-                            </div>
-                            <small class="text-muted">{{ $review->created_at->format('M d, Y') }}</small>
                         </div>
-                        
-                        <div class="mb-3">
-                            <a href="{{ route('products.show', $review->product->id) }}" class="text-decoration-none">
-                                <h6 class="fw-bold text-center mb-1" style="color: var(--primary-teal);">
-                                    <i class="bi bi-box-seam me-1"></i>{{ $review->product->name }}
-                                </h6>
-                            </a>
-                        </div>
-
-                        <p class="text-muted grow mb-3" style="font-size: 0.95rem;">{{ $review->comment }}</p>
-
-                        @auth
-                            @if($review->user_id === Auth::id())
-                            <div class="d-flex gap-2 mt-auto">
-                                <button type="button" class="btn btn-sm btn-outline-primary flex-fill" data-bs-toggle="modal" data-bs-target="#editModal{{ $review->id }}">
-                                    <i class="bi bi-pencil"></i> Edit
-                                </button>
-                                <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" class="flex-fill">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger w-100" onclick="return confirm('Delete this review?')">
-                                        <i class="bi bi-trash"></i> Delete
-                                    </button>
-                                </form>
-                            </div>
-                            @endif
-                        @endauth
-                    </div>
+                    @endforeach
                 </div>
-            </div>
 
-            @auth
-                @if($review->user_id === Auth::id())
-                <div class="modal fade" id="editModal{{ $review->id }}" tabindex="-1">
-                    <div class="modal-dialog">
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center mt-5">
+                    {{ $reviews->links('pagination::bootstrap-5') }}
+                </div>
+            @else
+                <div class="text-center py-5">
+                    <i class="bi bi-chat-left-text" style="font-size: 5rem; color: #1C7FDD; opacity: 0.3;"></i>
+                    <h4 class="fw-bold mt-4" style="color: #173648;">Belum Ada Ulasan</h4>
+                    <p class="text-muted">Jadilah yang pertama membagikan pengalaman Anda!</p>
+                    <a href="{{ route('products') }}" class="btn btn-custom-primary mt-3">
+                        <i class="bi bi-box-seam me-2"></i>Lihat Produk
+                    </a>
+                </div>
+            @endif
+        </div>
+    </section>
+
+    <!-- Edit Review Modals - MOVED OUTSIDE LOOP -->
+    @auth
+        @foreach ($reviews as $review)
+            @if ($review->user_id === Auth::id())
+                <div class="modal fade" id="editReviewModal{{ $review->id }}" tabindex="-1"
+                    aria-labelledby="editReviewModalLabel{{ $review->id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Edit Your Review</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                <h5 class="modal-title" id="editReviewModalLabel{{ $review->id }}">Edit Ulasan</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <form action="{{ route('reviews.update', $review->id) }}" method="POST">
                                 @csrf
@@ -116,43 +172,33 @@
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Rating</label>
                                         <div class="rating-input">
-                                            @for($i = 5; $i >= 1; $i--)
-                                                <input type="radio" name="rating" value="{{ $i }}" id="edit_star{{ $review->id }}_{{ $i }}" {{ $review->rating == $i ? 'checked' : '' }} required>
-                                                <label for="edit_star{{ $review->id }}_{{ $i }}"><i class="bi bi-star-fill"></i></label>
+                                            @for ($i = 5; $i >= 1; $i--)
+                                                <input type="radio" name="rating" value="{{ $i }}"
+                                                    id="edit_star{{ $review->id }}_{{ $i }}"
+                                                    {{ $review->rating == $i ? 'checked' : '' }} required>
+                                                <label for="edit_star{{ $review->id }}_{{ $i }}">
+                                                    <i class="bi bi-star-fill"></i>
+                                                </label>
                                             @endfor
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold">Your Review</label>
-                                        <textarea class="form-control" name="comment" rows="4" required>{{ $review->comment }}</textarea>
+                                        <label for="edit_comment{{ $review->id }}" class="form-label fw-bold">Ulasan
+                                            Anda</label>
+                                        <textarea class="form-control" id="edit_comment{{ $review->id }}" name="comment" rows="4" required>{{ $review->comment }}</textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-custom-pink">Save Changes</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-custom-primary">
+                                        <i class="bi bi-save me-2"></i>Simpan Perubahan
+                                    </button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                @endif
-            @endauth
-            @endforeach
-        </div>
-
-        <div class="d-flex justify-content-center mt-5">
-            <nav aria-label="Reviews pagination">
-                {{ $reviews->links('pagination::bootstrap-5') }}
-            </nav>
-        </div>
-        @else
-        <div class="text-center py-5">
-            <i class="bi bi-chat-left-text" style="font-size: 5rem; opacity: 0.3;"></i>
-            <h4 class="fw-bold mt-4">No Reviews Yet</h4>
-            <p class="text-muted">Be the first to share your experience!</p>
-            <a href="/products" class="btn btn-custom-pink">Browse Products</a>
-        </div>
-        @endif
-    </div>
-</section>
+            @endif
+        @endforeach
+    @endauth
 @endsection
