@@ -26,6 +26,7 @@
                     </p>
                 </div>
                 <div class="col-lg-6">
+                    <!-- Stats Grid -->
                     <div class="row g-3">
                         <div class="col-6">
                             <div class="hero-stat-card">
@@ -153,7 +154,7 @@
         </div>
     </section>
 
-    <!-- Edit Review Modals - MOVED OUTSIDE LOOP -->
+    <!-- Edit Review Modals -->
     @auth
         @foreach ($reviews as $review)
             @if ($review->user_id === Auth::id())
