@@ -24,9 +24,9 @@ Route::post('/contact', [ContactController::class, 'submit'])->name('contact.sub
 
 Route::get('/about', function () {
     return view('user.about');
-});
+})->name('about');
 
-Route::get('/review', [ReviewController::class, 'index'])->name('reviews.index');
+Route::get('/review', [ReviewController::class, 'index'])->name('review');  // ✅ ADDED ->name('review')
 
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
     });
 
-    // Review routes    // Review routes
+    // Review routes
     Route::prefix('reviews')->name('reviews.')->group(function () {
         Route::post('/{product}', [ReviewController::class, 'store'])->name('store');
         Route::put('/{review}', [ReviewController::class, 'update'])->name('update');
@@ -82,6 +82,6 @@ Route::middleware('auth')->group(function () {
         Route::put('/warehouse/product/{id}/stock', [AdminController::class, 'updateStock'])->name('warehouse.update-stock');
         Route::delete('/warehouse/product/{id}', [AdminController::class, 'deleteProduct'])->name('warehouse.delete');
         Route::get('/orders', [AdminController::class, 'orders'])->name('orders');
-        Route::put('/orders/{id}/status', [AdminController::class, 'updateOrderStatus'])->name('orders.update-status');
+        Route::put('/orders/{order}/status', [AdminController::class, 'updateOrderStatus'])->name('orders.update-status');
     });
 });

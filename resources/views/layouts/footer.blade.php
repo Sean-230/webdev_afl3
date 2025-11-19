@@ -72,7 +72,7 @@
                         </a>
                     </li>
                     <li class="mb-3">
-                        <a href="{{ route('reviews.index') }}" class="footer-link">
+                        <a href="{{ route('review') }}" class="footer-link">
                             <i class="bi bi-chevron-right me-2" style="font-size: 0.8rem;"></i>Review
                         </a>
                     </li>
@@ -185,35 +185,6 @@
             </p>
         </div>
     </div>
-
-    <!-- Back to Top Button -->
-    <button onclick="scrollToTop()" id="backToTopBtn"
-        class="btn rounded-circle position-fixed bottom-0 end-0 m-4 shadow-lg"
-        style="width: 55px; height: 55px; background-color: #1C7FDD; color: white; 
-               border: none; display: none; z-index: 1000; transition: all 0.3s ease;"
-        onmouseover="this.style.backgroundColor='#0FB7D4'; this.style.transform='scale(1.1)';"
-        onmouseout="this.style.backgroundColor='#1C7FDD'; this.style.transform='scale(1)';">
-        <i class="bi bi-arrow-up-short fs-3"></i>
-    </button>
-
-    <script>
-        // Back to Top Button functionality
-        window.onscroll = function() {
-            const backToTopBtn = document.getElementById("backToTopBtn");
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                backToTopBtn.style.display = "block";
-            } else {
-                backToTopBtn.style.display = "none";
-            }
-        };
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-    </script>
 
     <style>
         /* Footer Links */

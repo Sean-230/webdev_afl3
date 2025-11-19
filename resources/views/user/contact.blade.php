@@ -29,8 +29,8 @@
                     <div class="row g-3">
                         <div class="col-6">
                             <div class="hero-stat-card">
-                                <i class="bi bi-headset hero-stat-icon"></i>
-                                <h5 class="hero-stat-title">24/7 Support</h5>
+                                <i class="bi bi-clock-history hero-stat-icon"></i>
+                                <h5 class="hero-stat-title">Senin - Sabtu</h5>
                             </div>
                         </div>
                         <div class="col-6">
@@ -65,20 +65,16 @@
                             </div>
                         @endif
 
-                        @if ($errors->any())
+                        @if (session('error'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <ul class="mb-0">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                                <i class="bi bi-exclamation-circle me-2"></i>{{ session('error') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
                         @endif
 
-                        <form action="{{ route('contact.submit') }}" method="POST" class="contact-form">
+                        <form action="{{ route('contact.submit') }}" method="POST">
                             @csrf
-                            <div class="row g-4">
+                            <div class="row g-3">
                                 <!-- Nama Lengkap -->
                                 <div class="col-md-6">
                                     <label for="name" class="form-label-custom">
@@ -92,14 +88,14 @@
                                     @enderror
                                 </div>
 
-                                <!-- Email -->
+                                <!-- Alamat Email -->
                                 <div class="col-md-6">
                                     <label for="email" class="form-label-custom">
                                         Alamat Email <span class="text-danger">*</span>
                                     </label>
                                     <input type="email" class="form-control-custom @error('email') is-invalid @enderror"
                                         id="email" name="email" value="{{ old('email') }}"
-                                        placeholder="contoh@email.com" required>
+                                        placeholder="nama@email.com" required>
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -283,12 +279,13 @@
                                 <div class="social-media-links">
                                     @php
                                         $socialMedia = [
-                                            ['icon' => 'bi-facebook', 'url' => '#', 'name' => 'Facebook'],
-                                            ['icon' => 'bi-instagram', 'url' => '#', 'name' => 'Instagram'],
+                                            ['name' => 'Facebook', 'icon' => 'bi-facebook', 'url' => '#'],
+                                            ['name' => 'Instagram', 'icon' => 'bi-instagram', 'url' => '#'],
+                                            ['name' => 'Twitter', 'icon' => 'bi-twitter', 'url' => '#'],
                                             [
+                                                'name' => 'WhatsApp',
                                                 'icon' => 'bi-whatsapp',
                                                 'url' => 'https://wa.me/6281234567890',
-                                                'name' => 'WhatsApp',
                                             ],
                                         ];
                                     @endphp
@@ -359,15 +356,13 @@
 
                     <div class="accordion" id="faqAccordion">
                         @foreach ($faqs as $index => $faq)
-                            <div class="faq-item {{ !$loop->last ? 'mb-3' : '' }}">
-                                <h2 class="accordion-header">
-                                    <button class="faq-button {{ $faq['show'] ? '' : 'collapsed' }}" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#faq{{ $index + 1 }}">
-                                        {{ $faq['question'] }}
-                                    </button>
-                                </h2>
-                                <div id="faq{{ $index + 1 }}"
-                                    class="accordion-collapse collapse {{ $faq['show'] ? 'show' : '' }}"
+                            <div class="faq-item">
+                                <button class="faq-button {{ $faq['show'] ? '' : 'collapsed' }}" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#faq{{ $index }}"
+                                    aria-expanded="{{ $faq['show'] ? 'true' : 'false' }}">
+                                    {{ $faq['question'] }}
+                                </button>
+                                <div id="faq{{ $index }}" class="collapse {{ $faq['show'] ? 'show' : '' }}"
                                     data-bs-parent="#faqAccordion">
                                     <div class="faq-answer">
                                         {{ $faq['answer'] }}
