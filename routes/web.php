@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Models\Product;
 
 // Public routes
@@ -43,10 +44,19 @@ Route::middleware('guest')->group(function () {
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
+// Email verification routes
+Route::middleware('auth')->group(function () {
+    Route::get('/email/verify', [EmailVerificationController::class, 'notice'])->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
+        ->middleware('signed')->name('verification.verify');
+    Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])
+        ->name('verification.send');
+});
+
 // Authenticated routes
 Route::middleware('auth')->group(function () {
-// Cart routes
-Route::prefix('cart')->name('cart.')->middleware('auth')->group(function () {
+// Cart routes (require email verification)
+Route::prefix('cart')->name('cart.')->middleware('verified')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('index');
     Route::post('/add/{product}', [CartController::class, 'add'])->name('add');
     Route::put('/{cartItem}', [CartController::class, 'update'])->name('update');
@@ -54,8 +64,8 @@ Route::prefix('cart')->name('cart.')->middleware('auth')->group(function () {
     Route::delete('/', [CartController::class, 'clear'])->name('clear');
 });
 
-// Order routes
-Route::prefix('orders')->name('orders.')->middleware('auth')->group(function () {
+// Order routes (require email verification)
+Route::prefix('orders')->name('orders.')->middleware('verified')->group(function () {
     Route::get('/', [OrderController::class, 'index'])->name('index');
     Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
 });
