@@ -130,7 +130,7 @@
                                 <textarea class="form-control form-control-sm" name="notes" rows="2" placeholder="Special instructions..."></textarea>
                             </div>
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-custom-pink btn-lg">
+                                <button type="submit" class="btn btn-lg" style="background-color: #1C7FDD; color: white;">
                                     <i class="bi bi-credit-card me-2"></i>Proceed to Checkout
                                 </button>
                                 <a href="/products" class="btn btn-outline-secondary">
