@@ -14,7 +14,7 @@ class ProductController extends Controller
         // Filter by category
         if ($request->has('category') && $request->category != '') {
             $query->whereHas('categories', function($q) use ($request) {
-                $q->where('categories.id', $request->category);
+                $q->where('categories.name', $request->category);
             });
         }
 
@@ -32,7 +32,7 @@ class ProductController extends Controller
         }
 
         $products = $query->paginate(12);
-        $categories = \App\Models\Category::all();
+        $categories = \App\Models\Category::withCount('products')->get();
 
         return view('user.products', compact('products', 'categories'));
     }
