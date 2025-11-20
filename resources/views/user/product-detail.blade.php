@@ -82,8 +82,9 @@
 
                     <!-- Add to Cart Form -->
                     @auth
-                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                    <form action="{{ route('cart.store') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <label for="quantity" class="form-label fw-bold">Quantity</label>
