@@ -23,6 +23,10 @@
                             <a class="nav-link fw-medium text-dark px-2 {{ Request::is('admin/warehouse') ? 'active' : '' }}"
                                 href="/admin/warehouse">Gudang</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-medium text-dark px-2 {{ Request::is('admin/orders') ? 'active' : '' }}"
+                                href="/admin/orders">Pesanan</a>
+                        </li>
                     @else
                         <li class="nav-item">
                             <a class="nav-link fw-medium text-dark px-2 {{ Request::is('/') ? 'active' : '' }}"
