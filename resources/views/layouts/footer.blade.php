@@ -67,11 +67,6 @@
                         </a>
                     </li>
                     <li class="mb-3">
-                        <a href="/about" class="footer-link">
-                            <i class="bi bi-chevron-right me-2" style="font-size: 0.8rem;"></i>Tentang Kami
-                        </a>
-                    </li>
-                    <li class="mb-3">
                         <a href="{{ route('review') }}" class="footer-link">
                             <i class="bi bi-chevron-right me-2" style="font-size: 0.8rem;"></i>Review
                         </a>

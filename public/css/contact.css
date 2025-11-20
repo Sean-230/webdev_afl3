@@ -291,6 +291,13 @@ textarea.form-control-custom {
     flex: 1;
 }
 
+.contact-info-subtitle {
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
 .contact-info-label {
     color: white;
     font-weight: 700;
@@ -299,20 +306,33 @@ textarea.form-control-custom {
 }
 
 .contact-info-text {
-    color: white;
-    opacity: 0.85;
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.95rem;
     line-height: 1.6;
     margin-bottom: 0.25rem;
 }
 
 .contact-info-link {
-    color: white;
-    opacity: 0.85;
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     transition: all 0.3s ease;
     display: block;
     margin-bottom: 0.25rem;
+}
+
+.contact-info-link:hover {
+    opacity: 1;
+    color: #0FB7D4;
+}
+
+.contact-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+    color: #0FB7D4;
 }
 
 .contact-info-link:hover {

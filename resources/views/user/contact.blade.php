@@ -80,7 +80,7 @@
                                     <label for="name" class="form-label-custom">
                                         Nama Lengkap <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" class="form-control-custom @error('name') is-invalid @enderror"
+                                    <input type="text" class="form-control form-control-custom @error('name') is-invalid @enderror"
                                         id="name" name="name" value="{{ old('name') }}"
                                         placeholder="Masukkan nama lengkap Anda" required>
                                     @error('name')
@@ -93,7 +93,7 @@
                                     <label for="email" class="form-label-custom">
                                         Alamat Email <span class="text-danger">*</span>
                                     </label>
-                                    <input type="email" class="form-control-custom @error('email') is-invalid @enderror"
+                                    <input type="email" class="form-control form-control-custom @error('email') is-invalid @enderror"
                                         id="email" name="email" value="{{ old('email') }}"
                                         placeholder="nama@email.com" required>
                                     @error('email')
@@ -106,7 +106,7 @@
                                     <label for="phone" class="form-label-custom">
                                         Nomor Telepon <span class="text-danger">*</span>
                                     </label>
-                                    <input type="tel" class="form-control-custom @error('phone') is-invalid @enderror"
+                                    <input type="tel" class="form-control form-control-custom @error('phone') is-invalid @enderror"
                                         id="phone" name="phone" value="{{ old('phone') }}"
                                         placeholder="+62 812 3456 7890" required>
                                     @error('phone')
@@ -119,7 +119,7 @@
                                     <label for="company" class="form-label-custom">
                                         Nama Perusahaan
                                     </label>
-                                    <input type="text" class="form-control-custom" id="company" name="company"
+                                    <input type="text" class="form-control form-control-custom" id="company" name="company"
                                         value="{{ old('company') }}" placeholder="Nama perusahaan Anda (opsional)">
                                 </div>
 
@@ -128,7 +128,7 @@
                                     <label for="subject" class="form-label-custom">
                                         Subjek <span class="text-danger">*</span>
                                     </label>
-                                    <select class="form-select-custom @error('subject') is-invalid @enderror" id="subject"
+                                    <select class="form-select form-select-custom @error('subject') is-invalid @enderror" id="subject"
                                         name="subject" required>
                                         <option value="" selected disabled>Pilih subjek pesan...</option>
                                         <option value="general" {{ old('subject') == 'general' ? 'selected' : '' }}>
@@ -155,7 +155,7 @@
                                     <label for="message" class="form-label-custom">
                                         Pesan <span class="text-danger">*</span>
                                     </label>
-                                    <textarea class="form-control-custom @error('message') is-invalid @enderror" id="message" name="message"
+                                    <textarea class="form-control form-control-custom @error('message') is-invalid @enderror" id="message" name="message"
                                         rows="6" placeholder="Tulis pesan Anda di sini..." required>{{ old('message') }}</textarea>
                                     <div class="form-text-custom">Minimal 20 karakter</div>
                                     @error('message')
@@ -222,9 +222,8 @@
                                             'icon' => 'bi-clock-fill',
                                             'title' => 'Jam Operasional',
                                             'content' => [
-                                                'Senin - Jumat: 08:00 - 18:00',
-                                                'Sabtu: 09:00 - 16:00',
-                                                'Minggu: Libur',
+                                                'Senin - Sabtu: 08:00 - 18:00',
+                                                'Minggu / Hari Libur: Tutup',
                                             ],
                                             'type' => 'text',
                                         ],

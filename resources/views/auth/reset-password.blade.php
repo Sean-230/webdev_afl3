@@ -1,35 +1,24 @@
 <x-guest-layout>
     <div class="auth-card">
         <div class="auth-header">
-            <div class="logo-circle">
-                <img src="{{ asset('images/logo_transparan.png') }}" alt="Depo Es Krim">
-            </div>
-            <h3 class="mb-1">Daftar Akun Baru</h3>
-            <p class="mb-0 opacity-75">Bergabunglah dengan kami</p>
+            <img src="{{ asset('images/logo.png') }}" alt="Depo Es Krim">
+            <h3 class="mb-1">Reset Kata Sandi</h3>
+            <p class="mb-0 opacity-75">Buat kata sandi baru Anda</p>
         </div>
 
         <div class="auth-body">
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('password.store') }}">
                 @csrf
 
-                <!-- Name -->
-                <div class="mb-3">
-                    <label for="name" class="form-label fw-semibold">Username</label>
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                           id="name" name="name" value="{{ old('name') }}" 
-                           required autofocus autocomplete="name"
-                           placeholder="Masukkan username">
-                    @error('name')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                <!-- Password Reset Token -->
+                <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
                 <!-- Email Address -->
                 <div class="mb-3">
                     <label for="email" class="form-label fw-semibold">Email</label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                           id="email" name="email" value="{{ old('email') }}" 
-                           required autocomplete="username"
+                           id="email" name="email" value="{{ old('email', $request->email) }}" 
+                           required autofocus autocomplete="username"
                            placeholder="nama@email.com">
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -38,7 +27,7 @@
 
                 <!-- Password -->
                 <div class="mb-3">
-                    <label for="password" class="form-label fw-semibold">Kata Sandi</label>
+                    <label for="password" class="form-label fw-semibold">Kata Sandi Baru</label>
                     <input type="password" class="form-control @error('password') is-invalid @enderror" 
                            id="password" name="password" 
                            required autocomplete="new-password"
@@ -54,20 +43,13 @@
                     <input type="password" class="form-control" 
                            id="password_confirmation" name="password_confirmation" 
                            required autocomplete="new-password"
-                           placeholder="Ulangi kata sandi">
+                           placeholder="Ulangi kata sandi baru">
                 </div>
 
-                <div class="d-grid mb-3">
+                <div class="d-grid">
                     <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-person-plus me-2"></i>Daftar
+                        <i class="bi bi-shield-check me-2"></i>Reset Kata Sandi
                     </button>
-                </div>
-
-                <div class="text-center">
-                    <p class="mb-0">
-                        Sudah punya akun? 
-                        <a href="{{ route('login') }}" class="auth-link">Masuk sekarang</a>
-                    </p>
                 </div>
             </form>
         </div>

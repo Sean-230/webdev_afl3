@@ -1,110 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Ice Cream Distribution</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
-</head>
-
-<body class="auth-body">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="auth-card">
-                    <div class="row g-0">
-                        <!-- Left Side -->
-                        <div class="col-md-5 auth-left">
-                            <div class="text-center">
-                                <i class="bi bi-snow2 display-1 mb-4" style="color: var(--primary-dark);"></i>
-                                <h2>Welcome Back!</h2>
-                                <p>Login to access your account and explore our delicious ice cream collection.</p>
-                            </div>
-                        </div>
-
-                        <!-- Right Side - Login Form -->
-                        <div class="col-md-7 auth-right">
-                            <h3>Login to Your Account</h3>
-
-                            @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul class="mb-0">
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-
-                            <form method="POST" action="{{ route('login') }}">
-                                @csrf
-
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email Address</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                                           id="email" name="email" value="{{ old('email') }}" required autofocus>
-                                    @error('email')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror" 
-                                           id="password" name="password" required>
-                                    @error('password')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                                    <label class="form-check-label" for="remember">
-                                        Remember Me
-                                    </label>
-                                </div>
-
-                                <button type="submit" class="btn btn-login mb-3">
-                                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
-                                </button>
-
-                                <div class="text-center mb-3">
-                                    <a href="{{ route('password.request') }}" class="text-link">
-                                        <i class="bi bi-key me-1"></i>Forgot your password?
-                                    </a>
-                                </div>
-
-                                <div class="text-center">
-                                    <p class="mb-0">Don't have an account? 
-                                        <a href="{{ route('register') }}" class="text-link">Register here</a>
-                                    </p>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center mt-4">
-                    <a href="{{ route('home') }}" class="text-white text-decoration-none">
-                        <i class="bi bi-arrow-left me-2"></i>Back to Home
-                    </a>
-                </div>
+<x-guest-layout>
+    @section('body-class', 'login-page')
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="logo-circle">
+                <img src="{{ asset('images/logo_transparan.png') }}" alt="Depo Es Krim">
             </div>
+            <h3 class="mb-1">Selamat Datang Kembali</h3>
+            <p class="mb-0 opacity-75">Masuk ke akun Anda</p>
+        </div>
+
+        <div class="auth-body">
+            @if (session('status'))
+                <div class="alert alert-success mb-4" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+
+                <!-- Email Address -->
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-semibold">Email</label>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" 
+                           id="email" name="email" value="{{ old('email') }}" 
+                           required autofocus autocomplete="username"
+                           placeholder="nama@email.com">
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-semibold">Kata Sandi</label>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" 
+                           id="password" name="password" 
+                           required autocomplete="current-password"
+                           placeholder="Masukkan kata sandi">
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Remember Me -->
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
+                    <label class="form-check-label" for="remember_me">
+                        Ingat saya
+                    </label>
+                </div>
+
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Masuk
+                    </button>
+                </div>
+
+                <div class="text-center">
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}" class="auth-link d-block mb-3">
+                            Lupa kata sandi?
+                        </a>
+                    @endif
+
+                    <p class="mb-0">
+                        Belum punya akun? 
+                        <a href="{{ route('register') }}" class="auth-link">Daftar sekarang</a>
+                    </p>
+                </div>
+            </form>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+</x-guest-layout>

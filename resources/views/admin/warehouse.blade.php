@@ -217,7 +217,7 @@
 
                                     <!-- Stock (Editable) -->
                                     <td>
-                                        <form action="{{ route('admin.warehouse.update-stock', $product->id) }}"
+                                        <form action="{{ route('admin.warehouse.update', $product->id) }}"
                                             method="POST" class="d-flex align-items-center">
                                             @csrf
                                             @method('PUT')

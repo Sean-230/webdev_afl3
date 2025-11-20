@@ -32,14 +32,14 @@
                         <div class="col-6">
                             <div class="hero-stat-card">
                                 <i class="bi bi-box-seam hero-stat-icon"></i>
-                                <h5 class="hero-stat-title">{{ \App\Models\Product::count() }}+</h5>
+                                <h5 class="hero-stat-title">{{ \App\Models\Product::count() }}</h5>
                                 <p class="hero-stat-subtitle">Total Produk</p>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="hero-stat-card hero-stat-card-secondary">
                                 <i class="bi bi-tags-fill hero-stat-icon"></i>
-                                <h5 class="hero-stat-title">{{ \App\Models\Category::count() }}+</h5>
+                                <h5 class="hero-stat-title">{{ \App\Models\Category::count() }}</h5>
                                 <p class="hero-stat-subtitle">Kategori</p>
                             </div>
                         </div>
