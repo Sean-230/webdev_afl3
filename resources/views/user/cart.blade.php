@@ -138,14 +138,6 @@
                                 </a>
                             </div>
                         </form>
-
-                        <!-- Payment Info -->
-                        <div class="mt-4 p-3 rounded" style="background-color: #f8f9fa;">
-                            <p class="small text-muted mb-0">
-                                <i class="bi bi-shield-check me-2" style="color: var(--primary-teal);"></i>
-                                Secure checkout with SSL encryption
-                            </p>
-                        </div>
                     </div>
                 </div>
             </div>

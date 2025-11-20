@@ -212,63 +212,60 @@
                         <div class="row g-4">
                             @foreach ($products as $product)
                                 <div class="col-md-6 col-lg-4">
-                                    <div class="product-card">
-                                        <div class="product-image-wrapper">
-                                            @if ($product->image_path && file_exists(public_path($product->image_path)))
-                                                <img src="{{ asset($product->image_path) }}" alt="{{ $product->name }}"
-                                                    class="product-image">
-                                            @else
-                                                <div class="product-image-placeholder">
-                                                    <i class="bi bi-cup-straw"></i>
-                                                </div>
-                                            @endif
+                                    <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
+                                        <div class="product-card">
+                                            <div class="product-image-wrapper">
+                                                @if ($product->image_path && file_exists(public_path($product->image_path)))
+                                                    <img src="{{ asset($product->image_path) }}" alt="{{ $product->name }}"
+                                                        class="product-image">
+                                                @else
+                                                    <div class="product-image-placeholder">
+                                                        <i class="bi bi-cup-straw"></i>
+                                                    </div>
+                                                @endif
 
-                                            @if ($product->stock <= 10 && $product->stock > 0)
-                                                <span class="product-badge badge-warning">
-                                                    <i class="bi bi-exclamation-triangle me-1"></i>Stok Terbatas
-                                                </span>
-                                            @elseif($product->stock == 0)
-                                                <span class="product-badge badge-danger">
-                                                    <i class="bi bi-x-circle me-1"></i>Habis
-                                                </span>
-                                            @else
-                                                <span class="product-badge badge-success">
-                                                    <i class="bi bi-check-circle me-1"></i>Tersedia
-                                                </span>
-                                            @endif
-                                        </div>
-
-                                        <div class="product-body">
-                                            <!-- Categories -->
-                                            <div class="product-categories mb-2">
-                                                @foreach ($product->categories->take(2) as $category)
-                                                    <span class="category-tag">{{ $category->name }}</span>
-                                                @endforeach
+                                                @if ($product->stock <= 10 && $product->stock > 0)
+                                                    <span class="product-badge badge-warning">
+                                                        <i class="bi bi-exclamation-triangle me-1"></i>Stok Terbatas
+                                                    </span>
+                                                @elseif($product->stock == 0)
+                                                    <span class="product-badge badge-danger">
+                                                        <i class="bi bi-x-circle me-1"></i>Habis
+                                                    </span>
+                                                @else
+                                                    <span class="product-badge badge-success">
+                                                        <i class="bi bi-check-circle me-1"></i>Tersedia
+                                                    </span>
+                                                @endif
                                             </div>
 
-                                            <h5 class="product-title">{{ $product->name }}</h5>
-
-                                            <p class="product-description">
-                                                {{ Str::limit($product->description, 60) }}
-                                            </p>
-
-                                            <div class="product-footer">
-                                                <div class="product-price-wrapper">
-                                                    <span class="product-price">
-                                                        Rp {{ number_format($product->price, 0, ',', '.') }}
-                                                    </span>
-                                                    <span class="product-stock">
-                                                        <i class="bi bi-box me-1"></i>Stok: {{ $product->stock }}
-                                                    </span>
+                                            <div class="product-body">
+                                                <!-- Categories -->
+                                                <div class="product-categories mb-2">
+                                                    @foreach ($product->categories->take(2) as $category)
+                                                        <span class="category-tag">{{ $category->name }}</span>
+                                                    @endforeach
                                                 </div>
 
-                                                <a href="{{ route('products.show', $product->id) }}"
-                                                    class="btn btn-view-detail w-100">
-                                                    <i class="bi bi-eye me-2"></i>Lihat Detail
-                                                </a>
+                                                <h5 class="product-title">{{ $product->name }}</h5>
+
+                                                <p class="product-description">
+                                                    {{ Str::limit($product->description, 60) }}
+                                                </p>
+
+                                                <div class="product-footer">
+                                                    <div class="product-price-wrapper">
+                                                        <span class="product-price">
+                                                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                                                        </span>
+                                                        <span class="product-stock">
+                                                            <i class="bi bi-box me-1"></i>Stok: {{ $product->stock }}
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             @endforeach
                         </div>

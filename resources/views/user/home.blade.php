@@ -78,47 +78,43 @@
             <div class="row g-4 mb-5">
                 @foreach ($products as $product)
                     <div class="col-md-6 col-lg-3">
-                        <div class="card h-100 border-0 shadow-sm" style="border-radius: 15px; transition: all 0.3s ease;"
-                            onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.15)';"
-                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 10px rgba(0,0,0,0.1)';">
-                            <div class="position-relative overflow-hidden"
-                                style="height: 250px; border-radius: 15px 15px 0 0;">
-                                @if ($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" class="w-100 h-100"
-                                        alt="{{ $product->name }}" style="object-fit: cover;">
-                                @else
-                                    <div class="w-100 h-100 d-flex align-items-center justify-content-center"
-                                        style="background-color: rgba(28, 127, 221, 0.1);">
-                                        <i class="bi bi-cup-straw" style="font-size: 4rem; color: #1C7FDD;"></i>
-                                    </div>
-                                @endif
-                                @if ($product->stock <= 10 && $product->stock > 0)
-                                    <span class="badge position-absolute top-0 end-0 m-3"
-                                        style="background-color: #dc3545;">Stok Terbatas</span>
-                                @elseif($product->stock == 0)
-                                    <span class="badge position-absolute top-0 end-0 m-3"
-                                        style="background-color: #6c757d;">Habis</span>
-                                @endif
-                            </div>
-                            <div class="card-body p-4">
-                                <h5 class="fw-bold mb-2" style="color: #173648;">{{ $product->name }}</h5>
-                                <p class="text-muted small mb-3" style="height: 40px; overflow: hidden;">
-                                    {{ Str::limit($product->description, 60) }}
-                                </p>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="fw-bold fs-5" style="color: #1C7FDD;">
-                                        Rp {{ number_format($product->price, 0, ',', '.') }}
-                                    </span>
-                                    <span class="text-muted small">Stok: {{ $product->stock }}</span>
+                        <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm" style="border-radius: 15px; transition: all 0.3s ease; cursor: pointer;"
+                                onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.15)';"
+                                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 10px rgba(0,0,0,0.1)';">
+                                <div class="position-relative overflow-hidden"
+                                    style="height: 250px; border-radius: 15px 15px 0 0;">
+                                    @if ($product->image_path && file_exists(public_path($product->image_path)))
+                                        <img src="{{ asset($product->image_path) }}" class="w-100 h-100"
+                                            alt="{{ $product->name }}" style="object-fit: cover;">
+                                    @else
+                                        <div class="w-100 h-100 d-flex align-items-center justify-content-center"
+                                            style="background-color: rgba(28, 127, 221, 0.1);">
+                                            <i class="bi bi-cup-straw" style="font-size: 4rem; color: #1C7FDD;"></i>
+                                        </div>
+                                    @endif
+                                    @if ($product->stock <= 10 && $product->stock > 0)
+                                        <span class="badge position-absolute top-0 end-0 m-3"
+                                            style="background-color: #dc3545;">Stok Terbatas</span>
+                                    @elseif($product->stock == 0)
+                                        <span class="badge position-absolute top-0 end-0 m-3"
+                                            style="background-color: #6c757d;">Habis</span>
+                                    @endif
                                 </div>
-                                <a href="{{ route('products.show', $product->id) }}" class="btn w-100"
-                                    style="background-color: #1C7FDD; color: white; border-radius: 8px; transition: all 0.3s ease;"
-                                    onmouseover="this.style.backgroundColor='#0FB7D4';"
-                                    onmouseout="this.style.backgroundColor='#1C7FDD';">
-                                    Lihat Detail
-                                </a>
+                                <div class="card-body p-4">
+                                    <h5 class="fw-bold mb-2" style="color: #173648;">{{ $product->name }}</h5>
+                                    <p class="text-muted small mb-3" style="height: 40px; overflow: hidden;">
+                                        {{ Str::limit($product->description, 60) }}
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold fs-5" style="color: #1C7FDD;">
+                                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                                        </span>
+                                        <span class="text-muted small">Stok: {{ $product->stock }}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 @endforeach
             </div>

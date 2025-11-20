@@ -85,13 +85,21 @@
                     <form action="{{ route('cart.add', $product->id) }}" method="POST">
                         @csrf
                         <div class="row g-3 mb-4">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="quantity" class="form-label fw-bold">Quantity</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" max="100">
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="decrementQuantity()">
+                                        <i class="bi bi-dash"></i>
+                                    </button>
+                                    <input type="number" class="form-control text-center" id="quantity" name="quantity" value="1" min="1" max="100" readonly>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="incrementQuantity()">
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-custom-pink btn-lg">
+                            <button type="submit" class="btn btn-lg" style="background-color: #1C7FDD; color: white; font-weight: 600;">
                                 <i class="bi bi-cart-plus me-2"></i>Add to Cart
                             </button>
                         </div>
@@ -102,22 +110,29 @@
                         Please <a href="/login" class="alert-link">login</a> to add items to your cart.
                     </div>
                     @endauth
-
-                    <!-- Product Status -->
-                    <div class="mt-3">
-                        @if($product->is_active)
-                            <span class="badge bg-success">
-                                <i class="bi bi-check-circle me-1"></i>In Stock
-                            </span>
-                        @else
-                            <span class="badge bg-danger">
-                                <i class="bi bi-x-circle me-1"></i>Out of Stock
-                            </span>
-                        @endif
-                    </div>
                 </div>
             </div>
         </div>
+        
+        <script>
+        function incrementQuantity() {
+            const input = document.getElementById('quantity');
+            const max = parseInt(input.max);
+            const current = parseInt(input.value);
+            if (current < max) {
+                input.value = current + 1;
+            }
+        }
+        
+        function decrementQuantity() {
+            const input = document.getElementById('quantity');
+            const min = parseInt(input.min);
+            const current = parseInt(input.value);
+            if (current > min) {
+                input.value = current - 1;
+            }
+        }
+        </script>
 
         <!-- Reviews Section -->
         <div class="mt-5 pt-5 border-top">
@@ -184,7 +199,9 @@
 
                 <!-- Individual Reviews -->
                 <div class="row g-4">
-                    @foreach($product->reviews as $review)
+                    @foreach($product->reviews->sortByDesc(function($review) {
+                        return $review->user_id === Auth::id() ? 1 : 0;
+                    }) as $review)
                     <div class="col-12">
                         <div class="card shadow-sm">
                             <div class="card-body">
