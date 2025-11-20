@@ -10,7 +10,6 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\PasswordResetController;
-use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Models\Product;
 use App\Http\Controllers\ContactController;
 
@@ -43,15 +42,6 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
-
-// Email verification routes
-Route::middleware('auth')->group(function () {
-    Route::get('/email/verify', [EmailVerificationController::class, 'notice'])->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
-        ->middleware('signed')->name('verification.verify');
-    Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])
-        ->name('verification.send');
-});
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
@@ -89,6 +79,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/warehouse', [AdminController::class, 'warehouse'])->name('warehouse');
         Route::post('/warehouse/product', [AdminController::class, 'storeProduct'])->name('warehouse.store');
+        Route::put('/warehouse/product/{id}', [AdminController::class, 'updateProduct'])->name('warehouse.update');
         Route::put('/warehouse/product/{id}/stock', [AdminController::class, 'updateStock'])->name('warehouse.update-stock');
         Route::delete('/warehouse/product/{id}', [AdminController::class, 'deleteProduct'])->name('warehouse.delete');
         Route::get('/orders', [AdminController::class, 'orders'])->name('orders');

@@ -16,16 +16,11 @@
                 <div class="row align-items-center">
                     <div class="col-md-8">
                         <h1>
-                            <i class="bi bi-building"></i>
                             Manajemen Gudang
                         </h1>
                         <p>Kelola inventori dan stok produk Anda</p>
                     </div>
-                    <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                        <a href="{{ route('admin.dashboard') }}" class="btn btn-light">
-                            <i class="bi bi-arrow-left me-2"></i>Kembali ke Dashboard
-                        </a>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -39,6 +34,20 @@
                 </div>
             @endif
 
+            <!-- Error Alert -->
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    <strong>Error:</strong>
+                    <ul class="mb-0 mt-2">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
             <!-- Add Product Form -->
             <div class="form-card">
                 <div class="form-card-header">
@@ -46,7 +55,7 @@
                     Tambah Produk Baru
                 </div>
                 <div class="form-card-body">
-                    <form action="{{ route('admin.warehouse.store') }}" method="POST">
+                    <form action="{{ route('admin.warehouse.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row g-4">
                             <!-- Product Name -->
@@ -112,19 +121,18 @@
                                 @enderror
                             </div>
 
-                            <!-- Image Path -->
+                            <!-- Image Upload -->
                             <div class="col-md-4">
                                 <label class="form-label-custom">
-                                    Path Gambar <small class="text-muted">(opsional)</small>
+                                    Gambar Produk <small class="text-muted">(opsional)</small>
                                 </label>
-                                <input type="text"
-                                    class="form-control form-control-custom @error('image_path') is-invalid @enderror"
-                                    name="image_path" placeholder="images/products/vanilla.jpg"
-                                    value="{{ old('image_path') }}">
+                                <input type="file"
+                                    class="form-control form-control-custom @error('image') is-invalid @enderror"
+                                    name="image">
                                 <small class="form-help-text">
-                                    <i class="bi bi-image me-1"></i>Format: images/products/nama-file.jpg
+                                    <i class="bi bi-image me-1"></i>Upload any file
                                 </small>
-                                @error('image_path')
+                                @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -246,18 +254,103 @@
 
                                     <!-- Actions -->
                                     <td>
-                                        <form action="{{ route('admin.warehouse.delete', $product->id) }}" method="POST"
-                                            class="d-inline"
-                                            onsubmit="return confirm('Yakin ingin menghapus produk {{ $product->name }}?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-outline-danger btn-action"
-                                                title="Hapus Produk">
-                                                <i class="bi bi-trash3"></i>
+                                        <div class="d-flex gap-2">
+                                            <button type="button" class="btn btn-outline-primary btn-action"
+                                                data-bs-toggle="modal" data-bs-target="#editProductModal{{ $product->id }}"
+                                                title="Edit Produk">
+                                                <i class="bi bi-pencil"></i>
                                             </button>
-                                        </form>
+                                            <form action="{{ route('admin.warehouse.delete', $product->id) }}" method="POST"
+                                                class="d-inline"
+                                                onsubmit="return confirm('Yakin ingin menghapus produk {{ $product->name }}?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-outline-danger btn-action"
+                                                    title="Hapus Produk">
+                                                    <i class="bi bi-trash3"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
+
+                                <!-- Edit Product Modal -->
+                                <div class="modal fade" id="editProductModal{{ $product->id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Edit Produk: {{ $product->name }}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <form action="{{ route('admin.warehouse.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="modal-body">
+                                                    <div class="row g-3">
+                                                        <!-- Product Name -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Nama Produk <span class="text-danger">*</span></label>
+                                                            <input type="text" class="form-control" name="name" value="{{ $product->name }}" required>
+                                                        </div>
+
+                                                        <!-- Categories -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Kategori <span class="text-danger">*</span></label>
+                                                            <select class="form-select" name="categories[]" multiple required>
+                                                                @foreach ($categories as $category)
+                                                                    <option value="{{ $category->id }}"
+                                                                        {{ $product->categories->contains($category->id) ? 'selected' : '' }}>
+                                                                        {{ $category->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <!-- Price -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label">Harga (Rp) <span class="text-danger">*</span></label>
+                                                            <input type="number" class="form-control" name="price" value="{{ $product->price }}" step="0.01" min="0" required>
+                                                        </div>
+
+                                                        <!-- Stock -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label">Stok <span class="text-danger">*</span></label>
+                                                            <input type="number" class="form-control" name="stock" value="{{ $product->stock }}" min="0" required>
+                                                        </div>
+
+                                                        <!-- Image Upload -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label">Gambar Baru <small class="text-muted">(opsional)</small></label>
+                                                            <input type="file" class="form-control" name="image">
+                                                        </div>
+
+                                                        <!-- Current Image -->
+                                                        @if($product->image_path && file_exists(public_path($product->image_path)))
+                                                        <div class="col-12">
+                                                            <label class="form-label">Gambar Saat Ini:</label>
+                                                            <div>
+                                                                <img src="{{ asset($product->image_path) }}?v={{ time() }}" alt="{{ $product->name }}" style="max-height: 150px; object-fit: contain;">
+                                                            </div>
+                                                        </div>
+                                                        @endif
+
+                                                        <!-- Description -->
+                                                        <div class="col-12">
+                                                            <label class="form-label">Deskripsi Produk</label>
+                                                            <textarea class="form-control" name="description" rows="3">{{ $product->description }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="bi bi-save me-2"></i>Simpan Perubahan
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             @empty
                                 <tr>
                                     <td colspan="7">
