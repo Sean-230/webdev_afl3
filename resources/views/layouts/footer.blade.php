@@ -41,7 +41,7 @@
                         onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='#0A5A99'; this.style.transform='translateY(0)';">
                         <i class="bi bi-twitter"></i>
                     </a>
-                    <a href="https://wa.me/6281234567890"
+                    <a href="https://wa.me/6285852772500"
                         class="btn btn-sm rounded-circle border d-flex align-items-center justify-content-center"
                         style="width: 40px; height: 40px; color: white; border-color: #0A5A99 !important; transition: all 0.3s ease;"
                         target="_blank"
@@ -84,19 +84,19 @@
                     <div class="d-flex align-items-start mb-2">
                         <i class="bi bi-telephone-fill me-2 mt-1" style="color: #0FB7D4; font-size: 0.9rem;"></i>
                         <div>
-                            <a href="tel:+6281234567890" class="footer-contact-link d-block mb-1">
-                                +62 812 3456 7890
+                            <a href="tel:+6285852772500" class="footer-contact-link d-block mb-1">
+                                +62 858-5277-2500
                             </a>
-                            <a href="tel:+6282198765432" class="footer-contact-link d-block">
-                                +62 821 9876 5432
+                            <a href="tel:+6281331900500" class="footer-contact-link d-block">
+                                +62 813-3190-0500
                             </a>
                         </div>
                     </div>
                     <div class="d-flex align-items-start">
                         <i class="bi bi-envelope-fill me-2 mt-1" style="color: #0FB7D4; font-size: 0.9rem;"></i>
                         <div>
-                            <a href="mailto:info@depoeskrim.com" class="footer-contact-link d-block">
-                                info@depoeskrim.com
+                            <a href="mailto:email@gmail.com" class="footer-contact-link d-block">
+                                email@gmail.com
                             </a>
                         </div>
                     </div>
@@ -152,13 +152,13 @@
                         </div>
                     </div>
                     <div class="d-flex gap-2">
-                        <a href="tel:+6281234567890" class="btn btn-sm flex-fill fw-semibold"
+                        <a href="tel:+6285852772500" class="btn btn-sm flex-fill fw-semibold"
                             style="background-color: #1C7FDD; color: white; border-radius: 8px; padding: 8px 16px; transition: all 0.3s ease;"
                             onmouseover="this.style.backgroundColor='#0FB7D4';"
                             onmouseout="this.style.backgroundColor='#1C7FDD';">
                             <i class="bi bi-telephone-fill me-1"></i>Call
                         </a>
-                        <a href="https://wa.me/6281234567890" class="btn btn-sm flex-fill fw-semibold"
+                        <a href="https://wa.me/6285852772500" class="btn btn-sm flex-fill fw-semibold"
                             style="background-color: transparent; color: white; border: 2px solid #0FB7D4; border-radius: 8px; padding: 8px 16px; transition: all 0.3s ease;"
                             target="_blank"
                             onmouseover="this.style.backgroundColor='#0FB7D4'; this.style.borderColor='#0FB7D4';"

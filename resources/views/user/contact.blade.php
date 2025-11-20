@@ -188,9 +188,9 @@
                                             'icon' => 'bi-geo-alt-fill',
                                             'title' => 'Alamat',
                                             'content' => [
-                                                'Jl. Raya Distribution No. 123',
-                                                'Jakarta Selatan, DKI Jakarta',
-                                                '12345, Indonesia',
+                                                'Jl. Semolowaru Elok Blk. B No.8',
+                                                'Semolowaru, Kec. Sukolilo',
+                                                'Surabaya, Jawa Timur 60119',
                                             ],
                                             'type' => 'text',
                                         ],
@@ -198,8 +198,8 @@
                                             'icon' => 'bi-telephone-fill',
                                             'title' => 'Telepon',
                                             'content' => [
-                                                ['number' => '+62 812 3456 7890', 'link' => 'tel:+6281234567890'],
-                                                ['number' => '+62 821 9876 5432', 'link' => 'tel:+6282198765432'],
+                                                ['number' => '+62 858-5277-2500', 'link' => 'tel:+6285852772500'],
+                                                ['number' => '+62 813-3190-0500', 'link' => 'tel:+6281331900500'],
                                             ],
                                             'type' => 'phone',
                                         ],
@@ -208,12 +208,8 @@
                                             'title' => 'Email',
                                             'content' => [
                                                 [
-                                                    'email' => 'info@depoeskrim.com',
-                                                    'link' => 'mailto:info@depoeskrim.com',
-                                                ],
-                                                [
-                                                    'email' => 'sales@depoeskrim.com',
-                                                    'link' => 'mailto:sales@depoeskrim.com',
+                                                    'email' => 'email@gmail.com',
+                                                    'link' => 'mailto:email@gmail.com',
                                                 ],
                                             ],
                                             'type' => 'email',
@@ -284,7 +280,7 @@
                                             [
                                                 'name' => 'WhatsApp',
                                                 'icon' => 'bi-whatsapp',
-                                                'url' => 'https://wa.me/6281234567890',
+                                                'url' => 'https://wa.me/6285852772500',
                                             ],
                                         ];
                                     @endphp
