@@ -72,24 +72,25 @@
                                 @enderror
                             </div>
 
-                            <!-- Categories (Select2 Dropdown) -->
+                            <!-- Category (Single Dropdown) -->
                             <div class="col-md-6">
                                 <label class="form-label-custom">
                                     Kategori <span class="text-danger">*</span>
                                 </label>
-                                <select class="form-select select2-multiple @error('categories') is-invalid @enderror"
-                                    name="categories[]" multiple="multiple" required>
+                                <select class="form-select form-control-custom @error('category_id') is-invalid @enderror"
+                                    name="category_id" required>
+                                    <option value="" disabled selected>Pilih kategori</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
-                                            {{ collect(old('categories'))->contains($category->id) ? 'selected' : '' }}>
+                                            {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
                                 </select>
                                 <small class="form-help-text">
-                                    <i class="bi bi-info-circle me-1"></i>Pilih satu atau lebih kategori
+                                    <i class="bi bi-info-circle me-1"></i>Pilih satu kategori untuk produk
                                 </small>
-                                @error('categories')
+                                @error('category_id')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -293,20 +294,19 @@
                                                             <input type="text" class="form-control" name="name" value="{{ $product->name }}" required>
                                                         </div>
 
-                                                        <!-- Categories -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label">Kategori <span class="text-danger">*</span></label>
-                                                            <select class="form-select" name="categories[]" multiple required>
-                                                                @foreach ($categories as $category)
-                                                                    <option value="{{ $category->id }}"
-                                                                        {{ $product->categories->contains($category->id) ? 'selected' : '' }}>
-                                                                        {{ $category->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-
-                                                        <!-- Price -->
+                                        <!-- Category -->
+                                        <div class="col-md-6">
+                                            <label class="form-label">Kategori <span class="text-danger">*</span></label>
+                                            <select class="form-select" name="category_id" required>
+                                                <option value="" disabled>Pilih kategori</option>
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}"
+                                                        {{ $product->categories->first()?->id == $category->id ? 'selected' : '' }}>
+                                                        {{ $category->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>                                                        <!-- Price -->
                                                         <div class="col-md-4">
                                                             <label class="form-label">Harga (Rp) <span class="text-danger">*</span></label>
                                                             <input type="number" class="form-control" name="price" value="{{ $product->price }}" step="0.01" min="0" required>

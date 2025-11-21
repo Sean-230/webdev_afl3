@@ -28,8 +28,7 @@ class WarehouseController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'categories' => 'required|array|min:1',
-            'categories.*' => 'exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|file|max:2048',
         ]);
 
@@ -47,7 +46,7 @@ class WarehouseController extends Controller
         }
 
         $product->save();
-        $product->categories()->attach($validated['categories']);
+        $product->categories()->attach($validated['category_id']);
 
         return redirect()->route('admin.warehouse')
             ->with('success', 'Produk berhasil ditambahkan!');
@@ -60,8 +59,7 @@ class WarehouseController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'categories' => 'required|array|min:1',
-            'categories.*' => 'exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|file|max:2048',
         ]);
 
@@ -82,7 +80,7 @@ class WarehouseController extends Controller
         }
 
         $product->save();
-        $product->categories()->sync($validated['categories']);
+        $product->categories()->sync([$validated['category_id']]);
 
         return redirect()->route('admin.warehouse')
             ->with('success', 'Produk berhasil diperbarui!');
