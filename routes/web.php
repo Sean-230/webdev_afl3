@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+<<<<<<< Updated upstream
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewController;
@@ -18,8 +19,12 @@ Route::get('/', function () {
     $products = Product::inRandomOrder()->limit(4)->get();
     return view('user.home', compact('products'));
 })->name('home');
+=======
+use Illuminate\Support\Facades\Auth;
+>>>>>>> Stashed changes
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+<<<<<<< Updated upstream
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 Route::get('/about', function () {
@@ -39,6 +44,42 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [RegisterController::class, 'register']);
     Route::get('/forgot-password', [PasswordResetController::class, 'showResetForm'])->name('password.request');
     Route::post('/forgot-password', [PasswordResetController::class, 'reset'])->name('password.reset');
+=======
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
+// Dashboard - redirect based on user role
+Route::get('/dashboard', function () {
+    if (Auth::user()?->is_admin) {
+        return redirect()->route('admin.dashboard');
+    }
+    return redirect()->route('home');
+})->middleware('auth')->name('dashboard');
+
+// Authenticated User Routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::patch('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+    
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+    Route::patch('/cart/{cartItem}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::delete('/cart', [CartController::class, 'clear'])->name('cart.clear');
+    Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::post('/orders/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    
+    Route::get('/account/change-password', [AccountController::class, 'showChangePassword'])->name('account.change-password');
+    Route::post('/account/change-password', [AccountController::class, 'changePassword'])->name('account.update-password');
+    Route::delete('/account', [AccountController::class, 'deleteAccount'])->name('account.delete');
+    
+    // Profile routes
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+>>>>>>> Stashed changes
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
