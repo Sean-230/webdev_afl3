@@ -24,6 +24,43 @@ class CartController extends \Illuminate\Routing\Controller
         return view('user.cart', compact('cartItems', 'total'));
     }
 
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1|max:100'
+        ]);
+
+        $product = Product::findOrFail($validated['product_id']);
+        
+        // Check stock availability
+        if ($product->stock < $validated['quantity']) {
+            return redirect()->back()->with('error', 'Insufficient stock available.');
+        }
+        
+        $cart = $this->getOrCreateCart();
+
+        // Check if product already in cart
+        $cartItem = $cart->items()->where('product_id', $validated['product_id'])->first();
+
+        if ($cartItem) {
+            // Check stock for updated quantity
+            if ($product->stock < ($cartItem->quantity + $validated['quantity'])) {
+                return redirect()->back()->with('error', 'Insufficient stock available.');
+            }
+            $cartItem->increment('quantity', $validated['quantity']);
+        } else {
+            CartItem::create([
+                'cart_id' => $cart->id,
+                'product_id' => $validated['product_id'],
+                'quantity' => $validated['quantity'],
+                'price' => $product->price // Store price snapshot
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
+    }
+
     public function add(Request $request, $productId)
     {
         $validated = $request->validate([
