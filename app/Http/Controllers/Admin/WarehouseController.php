@@ -40,8 +40,10 @@ class WarehouseController extends Controller
         $product->stock = $validated['stock'];
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $product->image_path = 'storage/' . $path;
+            $image = $request->file('image');
+            $filename = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/products'), $filename);
+            $product->image_path = 'images/products/' . $filename;
         }
 
         $product->save();
@@ -70,12 +72,13 @@ class WarehouseController extends Controller
 
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($product->image_path) {
-                $oldPath = str_replace('storage/', '', $product->image_path);
-                Storage::disk('public')->delete($oldPath);
+            if ($product->image_path && file_exists(public_path($product->image_path))) {
+                unlink(public_path($product->image_path));
             }
-            $path = $request->file('image')->store('products', 'public');
-            $product->image_path = 'storage/' . $path;
+            $image = $request->file('image');
+            $filename = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/products'), $filename);
+            $product->image_path = 'images/products/' . $filename;
         }
 
         $product->save();
@@ -87,9 +90,8 @@ class WarehouseController extends Controller
 
     public function destroy(Product $product)
     {
-        if ($product->image_path) {
-            $oldPath = str_replace('storage/', '', $product->image_path);
-            Storage::disk('public')->delete($oldPath);
+        if ($product->image_path && file_exists(public_path($product->image_path))) {
+            unlink(public_path($product->image_path));
         }
 
         $product->categories()->detach();
