@@ -82,7 +82,7 @@
 
                     <!-- Add to Cart Form -->
                     @auth
-                    <form action="{{ route('cart.store') }}" method="POST">
+                    <form action="{{ route('cart.store') }}" method="POST" id="addToCartForm">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <div class="row g-3 mb-4">
@@ -92,15 +92,19 @@
                                     <button type="button" class="btn btn-outline-secondary" onclick="decrementQuantity()">
                                         <i class="bi bi-dash"></i>
                                     </button>
-                                    <input type="number" class="form-control text-center" id="quantity" name="quantity" value="1" min="1" max="100" readonly>
+                                    <input type="number" class="form-control text-center" id="quantity" name="quantity" value="1" min="1" max="{{ $product->stock }}" oninput="validateQuantity()">
                                     <button type="button" class="btn btn-outline-secondary" onclick="incrementQuantity()">
                                         <i class="bi bi-plus"></i>
                                     </button>
                                 </div>
+                                <div id="quantityError" class="text-danger mt-2" style="display: none; font-size: 0.875rem;">
+                                    <i class="bi bi-exclamation-circle me-1"></i>
+                                    <span id="errorMessage"></span>
+                                </div>
                             </div>
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-lg" style="background-color: #1C7FDD; color: white; font-weight: 600;">
+                            <button type="submit" class="btn btn-lg" id="addToCartBtn" style="background-color: #1C7FDD; color: white; font-weight: 600;">
                                 <i class="bi bi-cart-plus me-2"></i>Add to Cart
                             </button>
                         </div>
@@ -112,28 +116,77 @@
                     </div>
                     @endauth
                 </div>
+                </div>
             </div>
         </div>
         
+        @push('scripts')
         <script>
-        function incrementQuantity() {
-            const input = document.getElementById('quantity');
-            const max = parseInt(input.max);
-            const current = parseInt(input.value);
-            if (current < max) {
-                input.value = current + 1;
+        (function() {
+            const stockAvailable = parseInt('{{ $product->stock ?? 0 }}');
+            
+            function validateQuantity() {
+                const input = document.getElementById('quantity');
+                const errorDiv = document.getElementById('quantityError');
+                const errorMsg = document.getElementById('errorMessage');
+                const submitBtn = document.getElementById('addToCartBtn');
+                const value = parseInt(input.value);
+                
+                input.value = input.value.replace(/[^0-9]/g, '');
+                
+                if (!input.value || value < 1) {
+                    errorDiv.style.display = 'block';
+                    errorMsg.textContent = 'Quantity must be at least 1';
+                    submitBtn.disabled = true;
+                    return false;
+                }
+                
+                if (value > stockAvailable) {
+                    errorDiv.style.display = 'block';
+                    errorMsg.textContent = 'Only ' + stockAvailable + ' items available in stock';
+                    submitBtn.disabled = true;
+                    return false;
+                }
+                
+                errorDiv.style.display = 'none';
+                submitBtn.disabled = false;
+                return true;
             }
-        }
-        
-        function decrementQuantity() {
-            const input = document.getElementById('quantity');
-            const min = parseInt(input.min);
-            const current = parseInt(input.value);
-            if (current > min) {
-                input.value = current - 1;
+            
+            window.incrementQuantity = function() {
+                const input = document.getElementById('quantity');
+                const current = parseInt(input.value) || 0;
+                if (current < stockAvailable) {
+                    input.value = current + 1;
+                    validateQuantity();
+                }
+            };
+            
+            window.decrementQuantity = function() {
+                const input = document.getElementById('quantity');
+                const current = parseInt(input.value) || 0;
+                if (current > 1) {
+                    input.value = current - 1;
+                    validateQuantity();
+                }
+            };
+            
+            const form = document.getElementById('addToCartForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    if (!validateQuantity()) {
+                        e.preventDefault();
+                    }
+                });
             }
-        }
+            
+            const quantityInput = document.getElementById('quantity');
+            if (quantityInput) {
+                quantityInput.addEventListener('input', validateQuantity);
+            }
+        })();
         </script>
+        @endpush
 
         <!-- Reviews Section -->
         <div class="mt-5 pt-5 border-top">
