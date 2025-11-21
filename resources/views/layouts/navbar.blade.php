@@ -111,11 +111,8 @@
                         </ul>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-outline-custom-primary">
+                    <a href="{{ route('login') }}" class="btn btn-custom-primary">
                         <i class="bi bi-box-arrow-in-right me-1"></i>Masuk
-                    </a>
-                    <a href="{{ route('register') }}" class="btn btn-custom-primary">
-                        <i class="bi bi-person-plus me-1"></i>Daftar
                     </a>
                 @endauth
             </div>
