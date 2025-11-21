@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -20,10 +21,9 @@ Route::get('/products/{product}', [ProductController::class, 'show'])->name('pro
 Route::get('/review', [ReviewController::class, 'index'])->name('review');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
-
 // Dashboard - redirect based on user role
 Route::get('/dashboard', function () {
-    if (auth()->check() && auth()->user()->is_admin) {
+    if (Auth::user()?->is_admin) {
         return redirect()->route('admin.dashboard');
     }
     return redirect()->route('home');
@@ -38,10 +38,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
     Route::patch('/cart/{cartItem}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/cart/{cartItem}', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::delete('/cart/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::delete('/cart', [CartController::class, 'clear'])->name('cart.clear');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::post('/orders/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     
     Route::get('/account/change-password', [AccountController::class, 'showChangePassword'])->name('account.change-password');

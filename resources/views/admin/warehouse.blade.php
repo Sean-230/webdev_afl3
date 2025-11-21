@@ -220,7 +220,7 @@
                                         <form action="{{ route('admin.warehouse.update', $product->id) }}"
                                             method="POST" class="d-flex align-items-center">
                                             @csrf
-                                            @method('PUT')
+                                            @method('PATCH')
                                             <div class="input-group stock-input-group">
                                                 <input type="number" name="stock" value="{{ $product->stock }}"
                                                     class="form-control" min="0" required>
@@ -284,7 +284,7 @@
                                             </div>
                                             <form action="{{ route('admin.warehouse.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
-                                                @method('PUT')
+                                                @method('PATCH')
                                                 <div class="modal-body">
                                                     <div class="row g-3">
                                                         <!-- Product Name -->

@@ -39,7 +39,7 @@
                             <td>
                                 <form action="{{ route('admin.orders.update-status', $order->id) }}" method="POST" class="d-inline">
                                     @csrf
-                                    @method('PUT')
+                                    @method('PATCH')
                                     <select name="status" class="form-select form-select-sm d-inline w-auto" onchange="this.form.submit()">
                                         <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
                                         <option value="confirmed" {{ $order->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>

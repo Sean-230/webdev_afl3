@@ -20,12 +20,12 @@ class AdminOrderController extends Controller
     public function updateStatus(Request $request, Order $order)
     {
         $validated = $request->validate([
-            'status' => 'required|in:pending,processing,shipped,delivered,cancelled',
+            'status' => 'required|in:pending,confirmed,processing,completed,cancelled',
         ]);
 
         $order->update(['status' => $validated['status']]);
 
-        return redirect()->route('admin.orders.index')
+        return redirect()->route('admin.orders')
             ->with('success', 'Status pesanan berhasil diperbarui!');
     }
 }
